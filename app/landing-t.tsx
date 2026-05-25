@@ -22,7 +22,7 @@ import {
   StepCard,
 } from "@/components/landing/sections";
 import { useT } from "@/lib/i18n/lang-provider";
-import { ik, IK, PHOTOS } from "@/lib/photos";
+import { HERO_CAROUSEL, ik, IK, PHOTOS } from "@/lib/photos";
 import { GOOGLE_BUSINESS_URL } from "@/lib/reviews";
 
 const LOGO_TRANS = "https://ik.imagekit.io/bhukfoods/Logo/Logo%2020260523%201951_Trans.webp";
@@ -33,87 +33,92 @@ export function LandingT() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="px-[18px] pt-9 pb-7">
-        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 items-center">
-          <div className="max-w-[680px]">
-            <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[14px]">
-              <MapPin size={11} />
-              {t(
-                "NIT Agarpara · JIS University · 5 min walk",
-                "NIT Agarpara · JIS University · ৫ মিনিট",
-              )}
-            </div>
-            <h1 className="font-serif font-bold text-[34px] leading-[1.1] text-bhuk-maroon -tracking-[0.5px] mb-[14px]">
-              {t(
-                <>
-                  Home-style Bengali<br />tiffin for students
-                </>,
-                <>
-                  ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
-                </>,
-              )}
-            </h1>
-            <p className="text-[15px] leading-relaxed text-bhuk-ink2 mb-[6px]">
-              {t(
-                <>
-                  Two fresh-cooked meals delivered to PGs and hostels in
-                  Agarpara. Brunch and dinner, Monday to Saturday. A simple
-                  monthly subscription —{" "}
-                  <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
-                    see pricing →
-                  </a>
-                </>,
-                <>
-                  আগরপাড়ার ছাত্রাবাস ও PG-তে দু&apos;বেলা টাটকা রান্না করা খাবার।
-                  ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। সাধারণ মাসিক সাবস্ক্রিপশন —{" "}
-                  <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
-                    মূল্য দেখুন →
-                  </a>
-                </>,
-              )}
-            </p>
-            <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
-              {t(
-                "Home-style Bengali tiffin for NIT Agarpara and JIS University students. FSSAI-registered kitchen at 43, Matangini Hazra Pally.",
-                "NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য ঘরোয়া বাঙালি রান্না। FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে।",
-              )}
-            </p>
-            <div className="flex flex-wrap gap-[10px]">
-              <Link
-                href="/join"
-                className="bg-bhuk-maroon text-white px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-              >
-                {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
-              </Link>
-              <a
-                href="tel:+917595923777"
-                className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-              >
-                <Phone size={15} />
-                {t("Call 75959 23777", "কল ৭৫৯৫৯ ২৩৭৭৭")}
-              </a>
-              <a
-                href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
-                className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-              >
-                <Mail size={15} />
-                {t("WhatsApp", "WhatsApp")}
-              </a>
-            </div>
-          </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={ik(PHOTOS.hero, IK.hero)}
-            alt={t(
-              "A home-style Bengali meal from the Bhuk Foods kitchen in Agarpara",
-              "Bhuk Foods-এর রান্নাঘর থেকে ঘরোয়া বাঙালি খাবার",
-            ) as string}
-            loading="eager"
-            className="w-full rounded-card shadow-card object-cover aspect-[4/3] border border-bhuk-line"
-          />
+      {/* HERO — full-width banner with a crossfading photo carousel behind the copy */}
+      <section className="relative overflow-hidden">
+        {/* Background carousel: 7 images, ~5s each on a 35s loop with crossfade.
+            Capped peak opacity in globals.css so the headline stays readable. */}
+        <div className="absolute inset-0 -z-10" aria-hidden="true">
+          {HERO_CAROUSEL.map((src, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={i}
+              src={ik(src, IK.heroBg)}
+              alt=""
+              loading={i === 0 ? "eager" : "lazy"}
+              className="bhuk-hero-bg-img"
+            />
+          ))}
+          {/* A soft cream wash so text contrast stays high regardless of which photo is up. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-bhuk-cream/40 via-bhuk-cream/30 to-bhuk-cream/70" />
         </div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] mt-8 max-w-[680px]">
+
+        <div className="relative px-[18px] pt-12 pb-12 max-w-[760px]">
+          <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[14px]">
+            <MapPin size={11} />
+            {t(
+              "NIT Agarpara · JIS University · 5 min walk",
+              "NIT Agarpara · JIS University · ৫ মিনিট",
+            )}
+          </div>
+          <h1 className="font-serif font-bold text-[38px] sm:text-[44px] leading-[1.05] text-bhuk-maroon -tracking-[0.5px] mb-[14px]">
+            {t(
+              <>
+                Home-style Bengali<br />tiffin for students
+              </>,
+              <>
+                ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
+              </>,
+            )}
+          </h1>
+          <p className="text-[15px] leading-relaxed text-bhuk-ink mb-[6px]">
+            {t(
+              <>
+                Two fresh-cooked meals delivered to PGs and hostels in
+                Agarpara. Brunch and dinner, Monday to Saturday. A simple
+                monthly subscription —{" "}
+                <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                  see pricing →
+                </a>
+              </>,
+              <>
+                আগরপাড়ার ছাত্রাবাস ও PG-তে দু&apos;বেলা টাটকা রান্না করা খাবার।
+                ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। সাধারণ মাসিক সাবস্ক্রিপশন —{" "}
+                <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                  মূল্য দেখুন →
+                </a>
+              </>,
+            )}
+          </p>
+          <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
+            {t(
+              "Home-style Bengali tiffin for NIT Agarpara and JIS University students. FSSAI-registered kitchen at 43, Matangini Hazra Pally.",
+              "NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য ঘরোয়া বাঙালি রান্না। FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে।",
+            )}
+          </p>
+          <div className="flex flex-wrap gap-[10px]">
+            <Link
+              href="/join"
+              className="bg-bhuk-maroon text-white px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px] shadow-card"
+            >
+              {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
+            </Link>
+            <a
+              href="tel:+917595923777"
+              className="bg-white/95 backdrop-blur border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+            >
+              <Phone size={15} />
+              {t("Call 75959 23777", "কল ৭৫৯৫৯ ২৩৭৭৭")}
+            </a>
+            <a
+              href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
+              className="bg-white/95 backdrop-blur border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+            >
+              <Mail size={15} />
+              {t("WhatsApp", "WhatsApp")}
+            </a>
+          </div>
+        </div>
+        <div className="relative px-[18px] grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] pb-10 max-w-[760px]">
           <Stat n={t("2 meals", "২ বেলা")} l={t("brunch + dinner", "ব্রাঞ্চ + ডিনার")} />
           <Stat n={t("26 days", "২৬ দিন")} l={t("Mon to Sat", "সোম-শনি")} />
           <Stat n="4 PM" l={t("cancel cutoff", "বাতিলের সময়সীমা")} />
@@ -587,7 +592,15 @@ export function LandingT() {
           Kitchen substitution service Agarpara · Monthly tiffin near Narula Institute of Technology · Tiffin for JIS University students · Bengali home-cooked tiffin Sodepur · Student mess Belghoria · Monthly meal plan Kolkata north suburbs · BLPGA paying guest food
         </div>
         <div className="text-[10.5px] text-bhuk-off-ink mt-2">
-          © {new Date().getFullYear()} Bhuk Foods · Made in Agarpara
+          © {new Date().getFullYear()} Bhuk Foods · Made in Agarpara · Baked with hunger by{" "}
+          <a
+            href="https://www.zoethehappiness.com"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-bhuk-terra font-semibold no-underline hover:underline"
+          >
+            Zoe
+          </a>
         </div>
       </footer>
     </>

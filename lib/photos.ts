@@ -66,4 +66,20 @@ export const IK = {
   card: "w-640,q-78,f-auto",
   thumb: "w-480,q-78,f-auto",
   blogHero: "w-1400,q-78,f-auto",
+  heroBg: "w-1800,q-70,f-auto",
 } as const;
+
+/**
+ * Background carousel for the landing hero. 7 images, each shown ~5s out
+ * of a 35s loop with a 1s crossfade overlap. Order matters — change here
+ * and the rotation order updates everywhere.
+ */
+export const HERO_CAROUSEL = [
+  "https://ik.imagekit.io/bhukfoods/bq6dl0nvdkrr1zetwswq.webp?updatedAt=1773971131267",
+  "https://ik.imagekit.io/bhukfoods/t03ojolcgs0aqozqnyrr.webp?updatedAt=1773971109249",
+  "https://ik.imagekit.io/bhukfoods/ufnxkkeyrcfh2bu9yhcq.webp?updatedAt=1773971108525",
+  "https://ik.imagekit.io/bhukfoods/ge8jfam25pfcliy9utav.webp?updatedAt=1773971109265",
+  "https://ik.imagekit.io/bhukfoods/ke5zii30kal0tq1mcgpo.webp?updatedAt=1773971109321",
+  "https://ik.imagekit.io/bhukfoods/vyyqdrmy3qxttofsazfz.webp?updatedAt=1773971109247",
+  "https://ik.imagekit.io/bhukfoods/eoivn2kpydmcrqmihiey.webp?updatedAt=1773971108346",
+] as const;

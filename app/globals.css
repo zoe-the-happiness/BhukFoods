@@ -50,3 +50,39 @@ button, input, select, textarea {
 @media (prefers-reduced-motion: reduce) {
   .bhuk-marquee-track { animation: none; }
 }
+
+/* Hero background crossfade.
+ *
+ * 7 images share a 35s cycle. Each is on screen for ~5s with a 1s fade-in
+ * and 1s fade-out; image i is offset by i × 5s via animation-delay (set
+ * with nth-child below) so they take turns. Peak opacity is capped well
+ * below 1 so the headline + CTAs stay readable on the cream backdrop. */
+@keyframes bhuk-hero-fade {
+  0%      { opacity: 0; }
+  2.86%   { opacity: 0.32; }  /* fade-in done at 1s of 35s */
+  11.43%  { opacity: 0.32; }  /* hold from 1s to 4s */
+  14.28%  { opacity: 0; }     /* fade-out done at 5s */
+  100%    { opacity: 0; }
+}
+.bhuk-hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: bhuk-hero-fade 35s ease-in-out infinite;
+  will-change: opacity;
+  pointer-events: none;
+}
+.bhuk-hero-bg-img:nth-child(1) { animation-delay: 0s; }
+.bhuk-hero-bg-img:nth-child(2) { animation-delay: 5s; }
+.bhuk-hero-bg-img:nth-child(3) { animation-delay: 10s; }
+.bhuk-hero-bg-img:nth-child(4) { animation-delay: 15s; }
+.bhuk-hero-bg-img:nth-child(5) { animation-delay: 20s; }
+.bhuk-hero-bg-img:nth-child(6) { animation-delay: 25s; }
+.bhuk-hero-bg-img:nth-child(7) { animation-delay: 30s; }
+@media (prefers-reduced-motion: reduce) {
+  .bhuk-hero-bg-img { animation: none; opacity: 0.18; }
+  .bhuk-hero-bg-img:not(:first-child) { display: none; }
+}
