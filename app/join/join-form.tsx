@@ -10,10 +10,11 @@ import { useT } from "@/lib/i18n/lang-provider";
 import { submitJoin } from "./actions";
 
 type Mode = "blpga_onsite" | "self_pickup" | "home_delivery";
+type StudentChoice = "yes" | "no" | "";
 
 export function JoinForm() {
   const t = useT();
-  const [isStudent, setIsStudent] = useState<"yes" | "no">("yes");
+  const [isStudent, setIsStudent] = useState<StudentChoice>("");
   const [delivery, setDelivery] = useState<Mode>("home_delivery");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [topError, setTopError] = useState<string | null>(null);
@@ -88,9 +89,12 @@ export function JoinForm() {
       ) : null}
 
       <form onSubmit={onSubmit} className="space-y-4">
-        {/* Student switch */}
-        <Field label={t("Are you a student?", "আপনি কি ছাত্র/ছাত্রী?")} required>
-          <div className="flex gap-3 mt-1">
+        {/* Optional student tag */}
+        <Field
+          label={t("Are you a student?", "আপনি কি ছাত্র/ছাত্রী?")}
+          hint={t("Optional — leave blank if it doesn't apply.", "ঐচ্ছিক — না হলে ফাঁকা রাখুন।")}
+        >
+          <div className="flex gap-3 mt-1 flex-wrap">
             <Radio
               name="is_student"
               value="yes"
@@ -105,21 +109,30 @@ export function JoinForm() {
               onChange={() => setIsStudent("no")}
               label={t("No, working / other", "না, চাকুরিজীবী / অন্য")}
             />
+            <button
+              type="button"
+              onClick={() => setIsStudent("")}
+              className={`text-[11.5px] font-bold underline underline-offset-2 ${
+                isStudent === "" ? "text-bhuk-off-ink" : "text-bhuk-terra"
+              }`}
+            >
+              {t("Skip", "এড়িয়ে যান")}
+            </button>
           </div>
         </Field>
 
         {isStudent === "yes" ? (
           <>
-            <Field label={t("College", "কলেজ")} required error={errors.college}>
-              <Select name="college">
+            <Field label={t("College (optional)", "কলেজ (ঐচ্ছিক)")} error={errors.college}>
+              <Select name="college" defaultValue="">
                 <option value="">{t("Select…", "নির্বাচন করুন…")}</option>
                 <option value="NIT Agarpara">NIT Agarpara</option>
                 <option value="JIS University">JIS University</option>
                 <option value="Other">{t("Other", "অন্য")}</option>
               </Select>
             </Field>
-            <Field label={t("Year of study", "বর্ষ")} required error={errors.year_of_study}>
-              <Select name="year_of_study">
+            <Field label={t("Year of study (optional)", "বর্ষ (ঐচ্ছিক)")} error={errors.year_of_study}>
+              <Select name="year_of_study" defaultValue="">
                 <option value="">{t("Select…", "নির্বাচন করুন…")}</option>
                 <option value="1st">1st</option>
                 <option value="2nd">2nd</option>
@@ -129,16 +142,7 @@ export function JoinForm() {
               </Select>
             </Field>
           </>
-        ) : (
-          <>
-            <Field label={t("Profession", "পেশা")} required error={errors.profession}>
-              <Input name="profession" />
-            </Field>
-            <Field label={t("Workplace", "কর্মস্থল")} required error={errors.workplace}>
-              <Input name="workplace" />
-            </Field>
-          </>
-        )}
+        ) : null}
 
         {/* Name + contact */}
         <Field label={t("Full name", "পুরো নাম")} required error={errors.full_name}>
@@ -201,8 +205,12 @@ export function JoinForm() {
             >
               <Input name="google_maps_url" placeholder="https://maps.app.goo.gl/…" />
             </Field>
-            <Field label={t("Delivery address", "ঠিকানা")} required error={errors.delivery_address}>
-              <Textarea name="delivery_address" rows={2} />
+            <Field
+              label={t("Delivery address (PG / hostel / room number, building, street)", "ডেলিভারি ঠিকানা (PG / হোস্টেল / রুম নম্বর, বিল্ডিং, রাস্তা)")}
+              required
+              error={errors.delivery_address}
+            >
+              <Textarea name="delivery_address" rows={4} placeholder={t("Building name, room/flat number, street, area, pincode", "বিল্ডিং, রুম/ফ্ল্যাট নম্বর, রাস্তা, এলাকা, পিনকোড") as string} />
             </Field>
             <Field label={t("Landmark", "ল্যান্ডমার্ক")} error={errors.landmark}>
               <Input name="landmark" />
@@ -210,21 +218,24 @@ export function JoinForm() {
           </>
         ) : null}
 
-        <div className="grid grid-cols-2 gap-3">
-          <Field label={t("Parent / guardian name", "অভিভাবকের নাম")} error={errors.parent_name}>
-            <Input name="parent_name" />
-          </Field>
-          <Field label={t("Parent / guardian phone", "অভিভাবকের ফোন")} error={errors.parent_phone}>
-            <Input name="parent_phone" type="tel" inputMode="tel" />
-          </Field>
-        </div>
-
-        <Field label={t("Food preference", "খাবারের পছন্দ")} required>
-          <div className="flex gap-3 mt-1">
-            <Radio name="food_preference" value="veg" label={t("Vegetarian", "নিরামিষ")} />
-            <Radio name="food_preference" value="nonveg" label={t("Non-vegetarian", "আমিষ")} defaultChecked />
-          </div>
-        </Field>
+        {delivery === "self_pickup" ? (
+          <>
+            <Field
+              label={t("Where do you live?", "আপনি কোথায় থাকেন?")}
+              required
+              error={errors.delivery_address}
+              hint={t(
+                "Helps us reach you in an emergency. Pickup is at 43, Matangini Hazra Pally.",
+                "জরুরি অবস্থায় আপনাকে খুঁজে পেতে সাহায্য করবে। মিল নেওয়ার জায়গা ৪৩, মাতঙ্গিনী হাজরা পল্লী।",
+              )}
+            >
+              <Textarea name="delivery_address" rows={3} placeholder={t("Building, room/flat number, street, area, pincode", "বিল্ডিং, রুম/ফ্ল্যাট নম্বর, রাস্তা, এলাকা, পিনকোড") as string} />
+            </Field>
+            <Field label={t("Landmark", "ল্যান্ডমার্ক")} error={errors.landmark}>
+              <Input name="landmark" />
+            </Field>
+          </>
+        ) : null}
 
         <Field label={t("Allergies or notes", "অ্যালার্জি / নোট")} error={errors.allergies}>
           <Textarea name="allergies" rows={2} />
@@ -242,8 +253,8 @@ export function JoinForm() {
           <ol className="list-decimal pl-4 space-y-1">
             <li>
               {t(
-                "Bhuk Foods is a prepaid monthly meal subscription: ₹2,600 buys 26 service days × 2 meals (52 plates).",
-                "Bhuk Foods প্রিপেইড মাসিক মিল সাবস্ক্রিপশন: ₹২৬০০ দিলে ২৬ দিন × ২ বেলা = ৫২ মিল।",
+                "Bhuk Foods is a prepaid monthly meal subscription.",
+                "Bhuk Foods প্রিপেইড মাসিক মিল সাবস্ক্রিপশন।",
               )}
             </li>
             <li>

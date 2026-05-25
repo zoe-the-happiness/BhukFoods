@@ -7,13 +7,21 @@ import { renderTemplate } from "@/lib/email/render";
 import { deliveryBlock, deliveryLabel, studentBlock } from "@/lib/email/blocks";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
+/**
+ * Simplified schema (2026-05-25):
+ * - Student question is optional. College + year of study are kept but
+ *   optional (so a student can leave them blank).
+ * - Profession + workplace fields removed entirely.
+ * - Parent / guardian fields removed.
+ * - Food preference removed.
+ * - Delivery address required for both self-pickup AND home-delivery
+ *   (anyone not living at BLPGA needs to give us an address).
+ */
 const Schema = z
   .object({
-    is_student: z.enum(["yes", "no"]),
-    college: z.string().optional(),
-    year_of_study: z.string().optional(),
-    profession: z.string().optional(),
-    workplace: z.string().optional(),
+    is_student: z.enum(["yes", "no"]).optional().or(z.literal("")),
+    college: z.string().max(120).optional().or(z.literal("")),
+    year_of_study: z.string().max(40).optional().or(z.literal("")),
 
     full_name: z.string().min(2).max(120),
     phone: z.string().min(7).max(20),
@@ -26,10 +34,6 @@ const Schema = z
     delivery_address: z.string().max(500).optional().or(z.literal("")),
     landmark: z.string().max(200).optional().or(z.literal("")),
 
-    parent_name: z.string().max(120).optional().or(z.literal("")),
-    parent_phone: z.string().max(20).optional().or(z.literal("")),
-
-    food_preference: z.enum(["veg", "nonveg"]),
     allergies: z.string().max(500).optional().or(z.literal("")),
 
     start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal("")),
@@ -44,6 +48,13 @@ const Schema = z
       if (!v.delivery_address) {
         ctx.addIssue({ code: "custom", path: ["delivery_address"], message: "Address required for home delivery" });
       }
+    }
+    if (v.delivery_mode === "self_pickup" && !v.delivery_address) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["delivery_address"],
+        message: "Where do you live? We need this in case we have to find you in an emergency.",
+      });
     }
   });
 
@@ -63,24 +74,27 @@ export async function submitJoin(formData: FormData): Promise<Result> {
   const v = parsed.data;
 
   const supabase = createSupabaseAdminClient();
+  const isStudent =
+    v.is_student === "yes" ? true : v.is_student === "no" ? false : null;
+
   const insertRow = {
     full_name: v.full_name.trim(),
     phone: v.phone.trim(),
     email: v.email.trim().toLowerCase(),
     whatsapp: v.whatsapp || v.phone,
-    is_student: v.is_student === "yes",
-    college: v.is_student === "yes" ? v.college ?? null : null,
-    year_of_study: v.is_student === "yes" ? v.year_of_study ?? null : null,
-    profession: v.is_student === "no" ? v.profession ?? null : null,
-    workplace: v.is_student === "no" ? v.workplace ?? null : null,
+    is_student: isStudent,
+    college: isStudent ? v.college?.trim() || null : null,
+    year_of_study: isStudent ? v.year_of_study?.trim() || null : null,
+    profession: null,
+    workplace: null,
     delivery_mode: v.delivery_mode,
     google_maps_url: v.google_maps_url || null,
-    delivery_address: v.delivery_address || null,
-    landmark: v.landmark || null,
-    parent_name: v.parent_name || null,
-    parent_phone: v.parent_phone || null,
-    food_preference: v.food_preference,
-    allergies: v.allergies || null,
+    delivery_address: v.delivery_address?.trim() || null,
+    landmark: v.landmark?.trim() || null,
+    parent_name: null,
+    parent_phone: null,
+    food_preference: null,
+    allergies: v.allergies?.trim() || null,
     start_date: v.start_date || null,
     status: "pending" as const,
   };
@@ -107,15 +121,13 @@ export async function submitJoin(formData: FormData): Promise<Result> {
     delivery_address: insertRow.delivery_address ?? "",
     landmark: insertRow.landmark ?? "",
     maps_url: insertRow.google_maps_url ?? "",
-    food_preference: insertRow.food_preference,
+    food_preference: "",
     allergies: insertRow.allergies ?? "—",
     start_date: insertRow.start_date ?? "Not specified",
     site_url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bhukfoods.com",
     pending_id: row.id,
   };
 
-  // Fire both emails. We don't await them strictly serially — but we DO wait
-  // before returning so the user knows about delivery failures.
   try {
     const [forCustomer, forAdmin] = await Promise.all([
       renderTemplate("form_copy", sharedTags),
@@ -130,13 +142,8 @@ export async function submitJoin(formData: FormData): Promise<Result> {
       }),
     ]);
   } catch (err) {
-    // The pending row is already saved; surface the email failure separately
-    // so the admin can manually follow up.
     console.error("[join] email send failed", err);
-    return {
-      ok: true,
-      pendingId: row.id,
-    };
+    return { ok: true, pendingId: row.id };
   }
 
   return { ok: true, pendingId: row.id };

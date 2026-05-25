@@ -100,7 +100,7 @@ export interface PendingSubscriber {
   email: string;
   phone: string;
   whatsapp: string | null;
-  is_student: boolean;
+  is_student: boolean | null;
   college: string | null;
   year_of_study: string | null;
   profession: string | null;
