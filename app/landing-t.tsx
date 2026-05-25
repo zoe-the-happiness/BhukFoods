@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { FAQList } from "@/components/landing/faq";
+import { ReviewsMarquee } from "@/components/landing/reviews-marquee";
 import {
   Bullet,
   InfoCard,
@@ -22,6 +23,7 @@ import {
 } from "@/components/landing/sections";
 import { useT } from "@/lib/i18n/lang-provider";
 import { ik, IK, PHOTOS } from "@/lib/photos";
+import { GOOGLE_BUSINESS_URL } from "@/lib/reviews";
 
 const LOGO_TRANS = "https://ik.imagekit.io/bhukfoods/Logo/Logo%2020260523%201951_Trans.webp";
 
@@ -356,6 +358,45 @@ export function LandingT() {
             />
           ))}
         </div>
+      </section>
+
+      {/* REVIEWS — Google Business profile marquee */}
+      <section className="py-7 border-t border-bhuk-off">
+        <div className="px-[18px]">
+          <SectionTitle
+            en="What our customers say"
+            bn="গ্রাহকরা কী বলছেন"
+          />
+          <p className="text-[13.5px] text-bhuk-ink2 leading-relaxed mt-2 max-w-[680px]">
+            {t(
+              <>
+                Real reviews from real students and parents on our Google Business
+                profile. Tap any card to open the full review.{" "}
+                <a
+                  href={GOOGLE_BUSINESS_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-bhuk-terra font-bold underline underline-offset-2"
+                >
+                  See all on Google →
+                </a>
+              </>,
+              <>
+                আমাদের Google Business প্রোফাইলে আসল ছাত্রছাত্রী আর অভিভাবকদের রিভিউ।
+                যেকোনো কার্ডে ট্যাপ করে পুরো রিভিউ পড়ুন।{" "}
+                <a
+                  href={GOOGLE_BUSINESS_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-bhuk-terra font-bold underline underline-offset-2"
+                >
+                  Google-এ সব দেখুন →
+                </a>
+              </>,
+            )}
+          </p>
+        </div>
+        <ReviewsMarquee />
       </section>
 
       {/* DELIVERY */}

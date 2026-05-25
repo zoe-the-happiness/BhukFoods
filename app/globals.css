@@ -31,3 +31,22 @@ h1, h2, h3, h4 {
 button, input, select, textarea {
   font-family: inherit;
 }
+
+/* Marquee — used by the Google reviews carousel on the landing page.
+ * Two passes of the deck are rendered side-by-side; translating -50%
+ * makes the loop seamless. Pauses on hover for accessibility. */
+@keyframes bhuk-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.bhuk-marquee-track {
+  animation: bhuk-marquee 60s linear infinite;
+  will-change: transform;
+}
+.bhuk-marquee-track:hover,
+.bhuk-marquee-track:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bhuk-marquee-track { animation: none; }
+}
