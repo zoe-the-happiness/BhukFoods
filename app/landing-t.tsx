@@ -22,6 +22,8 @@ import {
 } from "@/components/landing/sections";
 import { useT } from "@/lib/i18n/lang-provider";
 
+const LOGO_TRANS = "https://ik.imagekit.io/bhukfoods/Logo/Logo%2020260523%201951_Trans.webp";
+
 /** All landing copy in one client tree because every block uses useT(). */
 export function LandingT() {
   const t = useT();
@@ -358,44 +360,137 @@ export function LandingT() {
       </section>
 
       {/* FOOTER */}
-      <footer className="px-[18px] pt-6 pb-10 border-t border-bhuk-off bg-[#FAF4E6] mt-5">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[18px] max-w-[1040px]">
+      <footer className="px-[18px] pt-8 pb-10 border-t border-bhuk-off bg-[#FAF4E6] mt-5">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[20px] max-w-[1040px]">
           <div>
-            <div className="font-serif font-bold text-[18px] text-bhuk-maroon">Bhuk Foods</div>
-            <div className="text-[12px] text-bhuk-ink2 leading-relaxed mt-[6px]">
+            <div className="flex items-center gap-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={LOGO_TRANS} alt="Bhuk Foods" width={36} height={36} className="rounded-[7px]" />
+              <div className="font-serif font-bold text-[18px] text-bhuk-maroon">
+                Bhuk Foods
+              </div>
+            </div>
+            <div className="text-[11.5px] text-bhuk-terra font-bold italic mt-1 max-w-[260px]">
               {t(
-                <>43, Matangini Hazra Pally<br />Agarpara, Kolkata 700109</>,
-                <>৪৩, মাতঙ্গিনী হাজরা পল্লী<br />আগরপাড়া, কলকাতা ৭০০১০৯</>,
+                "India's first kitchen substitution service · Stop cooking, start living.",
+                "ভারতের প্রথম রান্নাঘর-প্রতিস্থাপন সেবা · রান্না বন্ধ, জীবন শুরু।",
               )}
             </div>
+            <div className="text-[12px] text-bhuk-ink2 leading-relaxed mt-3">
+              {t(
+                <>
+                  BLPGA, 43, Matangini Hazra Pally
+                  <br />
+                  Agarpara, Kolkata 700109
+                </>,
+                <>
+                  BLPGA, ৪৩, মাতঙ্গিনী হাজরা পল্লী
+                  <br />
+                  আগরপাড়া, কলকাতা ৭০০১০৯
+                </>,
+              )}
+            </div>
+            <a
+              href="https://maps.app.goo.gl/Nans91VKu2FLVRFw5"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[11.5px] text-bhuk-terra font-bold no-underline mt-2 inline-block"
+            >
+              📍 {t("Open in Google Maps", "Google Maps খুলুন")} · M9JH+JX
+            </a>
           </div>
+
           <div>
             <div className="text-[11px] font-extrabold text-bhuk-off-ink tracking-wide">
               {t("CONTACT", "যোগাযোগ")}
             </div>
-            <div className="text-[13px] text-bhuk-ink mt-[6px] leading-relaxed">
+            <div className="text-[13px] text-bhuk-ink mt-[6px] leading-[1.9]">
               <a href="tel:+917595923777" className="text-bhuk-ink no-underline">
                 📞 {t("75959 23777", "৭৫৯৫৯ ২৩৭৭৭")}
               </a>
               <br />
-              <a href="mailto:hello@bhukfoods.com" className="text-bhuk-ink no-underline">
-                ✉ hello@bhukfoods.com
+              <a
+                href="https://wa.me/917595923777"
+                target="_blank"
+                rel="noreferrer"
+                className="text-bhuk-ink no-underline"
+              >
+                💬 {t("WhatsApp", "WhatsApp")}
+              </a>
+              <br />
+              <a href="mailto:bhukfoods@gmail.com" className="text-bhuk-ink no-underline">
+                ✉ bhukfoods@gmail.com
+              </a>
+            </div>
+            <div className="text-[11px] font-extrabold text-bhuk-off-ink tracking-wide mt-4">
+              {t("FOLLOW", "ফলো করুন")}
+            </div>
+            <div className="text-[13px] text-bhuk-ink mt-[6px] leading-[1.9]">
+              <a
+                href="https://www.instagram.com/bhukfoods/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-bhuk-ink no-underline"
+              >
+                📷 Instagram
+              </a>
+              <br />
+              <a
+                href="https://www.facebook.com/profile.php?id=61582663376504"
+                target="_blank"
+                rel="noreferrer"
+                className="text-bhuk-ink no-underline"
+              >
+                👍 Facebook
+              </a>
+              <br />
+              <a
+                href="https://www.youtube.com/@BhukFoods"
+                target="_blank"
+                rel="noreferrer"
+                className="text-bhuk-ink no-underline"
+              >
+                ▶ YouTube
               </a>
             </div>
           </div>
+
           <div>
             <div className="text-[11px] font-extrabold text-bhuk-off-ink tracking-wide">
-              {t("LOGIN", "লগইন")}
+              {t("EXPLORE", "ঘুরে দেখুন")}
             </div>
-            <div className="text-[13px] mt-[6px]">
+            <div className="text-[13px] mt-[6px] leading-[1.9]">
+              <Link href="/blog" className="text-bhuk-ink no-underline">
+                {t("Blog", "ব্লগ")}
+              </Link>
+              <br />
+              <Link href="/join" className="text-bhuk-ink no-underline">
+                {t("Subscribe", "সাবস্ক্রাইব")}
+              </Link>
+              <br />
               <Link href="/login" className="text-bhuk-terra font-bold no-underline">
                 {t("Customer / Admin / Kitchen →", "গ্রাহক / অ্যাডমিন / রান্নাঘর →")}
               </Link>
             </div>
+
+            <div className="text-[11px] font-extrabold text-bhuk-off-ink tracking-wide mt-4">
+              {t("REGISTRATIONS", "রেজিস্ট্রেশন")}
+            </div>
+            <div className="text-[10.5px] text-bhuk-ink2 mt-[4px] leading-relaxed font-mono">
+              FSSAI 22825131000756
+              <br />
+              Trade Lic. 0917P3084125375816
+              <br />
+              MSME UDYAM-WB-14-0087932
+            </div>
           </div>
         </div>
-        <div className="text-[11px] text-bhuk-off-ink mt-6 leading-relaxed max-w-[1040px]">
-          Tiffin service Agarpara · Tiffin near Narula Institute of Technology · Tiffin for JIS University students · Bengali home-cooked tiffin Sodepur · Student mess Belghoria · Monthly tiffin plan Kolkata north suburbs
+
+        <div className="text-[11px] text-bhuk-off-ink mt-8 leading-relaxed max-w-[1040px] border-t border-bhuk-off pt-4">
+          Kitchen substitution service Agarpara · Monthly tiffin near Narula Institute of Technology · Tiffin for JIS University students · Bengali home-cooked tiffin Sodepur · Student mess Belghoria · Monthly meal plan Kolkata north suburbs · BLPGA paying guest food
+        </div>
+        <div className="text-[10.5px] text-bhuk-off-ink mt-2">
+          © {new Date().getFullYear()} Bhuk Foods · Made in Agarpara
         </div>
       </footer>
     </>

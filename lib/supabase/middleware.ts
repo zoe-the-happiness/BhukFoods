@@ -5,10 +5,11 @@ import type { Role } from "@/lib/types/database";
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
-const PUBLIC_PATHS = ["/", "/login", "/join", "/auth/callback", "/auth/signout"];
+const PUBLIC_PATHS = ["/", "/login", "/join", "/blog", "/auth/callback", "/auth/signout"];
 
 function isPublicPath(pathname: string): boolean {
   if (PUBLIC_PATHS.includes(pathname)) return true;
+  if (pathname.startsWith("/blog/")) return true;
   // static assets / Next internals — middleware matcher already excludes most
   if (pathname.startsWith("/_next") || pathname.startsWith("/favicon") || pathname.includes(".")) {
     return true;

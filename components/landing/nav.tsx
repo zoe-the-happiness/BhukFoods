@@ -14,7 +14,13 @@ export function LandingNav() {
         <div className="font-serif font-bold text-[20px] text-bhuk-maroon -tracking-[0.3px]">
           Bhuk Foods
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/blog"
+            className="hidden sm:inline-flex text-[12.5px] font-extrabold text-bhuk-ink2 hover:text-bhuk-maroon no-underline"
+          >
+            {t("Blog", "ব্লগ")}
+          </Link>
           <LangToggle />
           <Link
             href="/login"

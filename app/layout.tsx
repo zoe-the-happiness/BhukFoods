@@ -65,6 +65,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const langCookie = cookies().get("bhuk-lang")?.value;
   const initialLang: Lang = langCookie === "bn" ? "bn" : "en";
 
@@ -79,6 +80,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <PwaInstallPrompt />
         </LangProvider>
+        {gaId ? (
+          <>
+            {/* Google Analytics 4 — measurement id ${gaId} */}
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${gaId}', { anonymize_ip: true });`,
+              }}
+            />
+          </>
+        ) : null}
         {clarityId ? (
           <script
             dangerouslySetInnerHTML={{
