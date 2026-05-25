@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  margin: 0;
+  background: #FBF1DE; /* bhuk-cream */
+  color: #2A1E16;       /* bhuk-ink */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-figtree), Figtree, system-ui, sans-serif;
+}
+
+/* Bengali pages opt in with class="font-bn" — handled by the language toggle. */
+.font-bn {
+  font-family: var(--font-noto-bn), "Noto Sans Bengali", var(--font-figtree), sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-fraunces), Fraunces, Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
