@@ -1,0 +1,429 @@
+"use client";
+
+import Link from "next/link";
+import {
+  ChefHat,
+  Clock,
+  Coffee,
+  Mail,
+  MapPin,
+  Moon,
+  Phone,
+  Sun,
+} from "lucide-react";
+
+import { FAQList } from "@/components/landing/faq";
+import {
+  Bullet,
+  InfoCard,
+  SectionTitle,
+  Stat,
+  StepCard,
+} from "@/components/landing/sections";
+import { useT } from "@/lib/i18n/lang-provider";
+
+/** All landing copy in one client tree because every block uses useT(). */
+export function LandingT() {
+  const t = useT();
+
+  return (
+    <>
+      {/* HERO */}
+      <section className="px-[18px] pt-9 pb-7">
+        <div className="max-w-[680px]">
+          <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[14px]">
+            <MapPin size={11} />
+            {t(
+              "NIT Agarpara · JIS University · 5 min walk",
+              "NIT Agarpara · JIS University · ৫ মিনিট",
+            )}
+          </div>
+          <h1 className="font-serif font-bold text-[34px] leading-[1.1] text-bhuk-maroon -tracking-[0.5px] mb-[14px]">
+            {t(
+              <>
+                Home-style Bengali<br />tiffin for students
+              </>,
+              <>
+                ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
+              </>,
+            )}
+          </h1>
+          <p className="text-[15px] leading-relaxed text-bhuk-ink2 mb-[6px]">
+            {t(
+              "Two fresh-cooked meals delivered to PGs and hostels in Agarpara. Brunch and dinner, Monday to Saturday. Just ₹2,600 per month — only ₹100 a day.",
+              "আগরপাড়ার ছাত্রাবাস ও PG-তে দু'বেলা টাটকা রান্না করা খাবার। ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। মাসিক ₹২৬০০ — দিন প্রতি মাত্র ₹১০০।",
+            )}
+          </p>
+          <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
+            {t(
+              "Home-style Bengali tiffin for NIT Agarpara and JIS University students. FSSAI-registered kitchen at 43, Matangini Hazra Pally.",
+              "NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য ঘরোয়া বাঙালি রান্না। FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে।",
+            )}
+          </p>
+          <div className="flex flex-wrap gap-[10px]">
+            <Link
+              href="/join"
+              className="bg-bhuk-maroon text-white px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+            >
+              {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
+            </Link>
+            <a
+              href="tel:+917595923777"
+              className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+            >
+              <Phone size={15} />
+              {t("Call 75959 23777", "কল ৭৫৯৫৯ ২৩৭৭৭")}
+            </a>
+            <a
+              href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
+              className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+            >
+              <Mail size={15} />
+              {t("WhatsApp", "WhatsApp")}
+            </a>
+          </div>
+        </div>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] mt-8 max-w-[680px]">
+          <Stat n={t("₹2,600", "₹২৬০০")} l={t("per month", "প্রতি মাস")} />
+          <Stat n={t("2 meals", "২ বেলা")} l={t("brunch + dinner", "ব্রাঞ্চ + ডিনার")} />
+          <Stat n={t("26 days", "২৬ দিন")} l={t("Mon to Sat", "সোম-শনি")} />
+          <Stat n="4 PM" l={t("cancel cutoff", "বাতিলের সময়সীমা")} />
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="How it works" bn="কীভাবে কাজ করে" />
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[14px] mt-[14px]">
+          <StepCard
+            n={t("1", "১")}
+            t={t("Pay ₹2,600 a month", "মাসিক ₹২৬০০ দিন")}
+            d={t(
+              "Send via UPI or bank transfer. The admin verifies and credits 26 meal days to your account.",
+              "UPI বা ব্যাঙ্ক ট্রান্সফারে। অ্যাডমিন যাচাই করে ২৬ মিল দিন যোগ করেন।",
+            )}
+          />
+          <StepCard
+            n={t("2", "২")}
+            t={t("Get two meals every day", "রোজ দু'বেলা খাবার")}
+            d={t(
+              "Monday to Saturday. Brunch and dinner delivered to your hostel or PG.",
+              "সোম-শনি, ব্রাঞ্চ আর ডিনার, আপনার হোস্টেল/PG তে পৌঁছে যাবে।",
+            )}
+          />
+          <StepCard
+            n={t("3", "৩")}
+            t={t("Tell us in advance if you'll skip", "না খেলে আগেই বলুন")}
+            d={t(
+              "Cancel any day in the app before 4 PM the previous day. Your balance funds a later day, so the plan extends.",
+              "আগের দিন বিকেল ৪টার আগে অ্যাপে ট্যাপ করুন। সেই দিনের টাকা মেয়াদের শেষে যোগ হবে।",
+            )}
+          />
+        </div>
+      </section>
+
+      {/* PLAN — UPDATED PRICING per spec */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="Monthly plan" bn="মাসিক প্ল্যান" />
+        <div className="bg-white border-[1.5px] border-bhuk-line rounded-card p-5 mt-[14px] max-w-[560px]">
+          <div className="flex items-baseline gap-[6px] text-bhuk-maroon">
+            <span className="font-serif font-bold text-[38px] leading-none">
+              {t("₹2,600", "₹২৬০০")}
+            </span>
+            <span className="text-[14px] font-bold text-bhuk-terra">
+              {t("/ month", "/ মাস")}
+            </span>
+          </div>
+          <div className="text-[12.5px] text-bhuk-ink2 mt-1">
+            {t(
+              "26 days × 2 meals · just ₹100 per meal day",
+              "২৬ দিন × ২ বেলা · দিন প্রতি মাত্র ₹১০০",
+            )}
+          </div>
+
+          <div className="mt-4 grid gap-[7px]">
+            <div className="font-extrabold text-[13px] text-bhuk-ink mt-2">
+              {t("+ Delivery (extra):", "+ ডেলিভারি (অতিরিক্ত):")}
+            </div>
+            <PriceRow label={t("BLPGA residents", "BLPGA-এ থাকা")} value={t("₹0", "₹০")} />
+            <PriceRow label={t("Self-pickup at kitchen", "নিজে এসে নেওয়া")} value={t("₹0", "₹০")} />
+            <PriceRow
+              label={t("Home delivery", "বাড়িতে ডেলিভারি")}
+              value={t("quote at signup", "শুরুতে কোট")}
+            />
+          </div>
+
+          <div className="mt-4 grid gap-[7px]">
+            <div className="font-extrabold text-[13px] text-bhuk-ink mt-2">
+              {t("+ One-time refundable security deposit:", "+ এককালীন ফেরতযোগ্য জামানত:")}
+            </div>
+            <PriceRow
+              label={t("Tiffin containers + carrier bag", "টিফিন বক্স + ক্যারিয়ার ব্যাগ")}
+              value={t("₹250", "₹২৫০")}
+            />
+            <div className="text-[11.5px] text-bhuk-off-ink">
+              {t("Not required for BLPGA residents", "BLPGA-এ থাকার জন্য প্রযোজ্য নয়")}
+            </div>
+          </div>
+
+          <div className="border-t border-bhuk-off mt-5 pt-3 grid gap-[9px]">
+            <Bullet
+              t={t(
+                "Brunch: rice · dal · main (chicken/fish/paneer/egg on rotation) · vegetable side",
+                "ব্রাঞ্চ: ভাত · ডাল · মূল পদ (চিকেন/মাছ/পনির/ডিম রোটেশন) · সাইড",
+              )}
+            />
+            <Bullet
+              t={t(
+                "Dinner: 4 rotis · seasonal vegetable curry · egg",
+                "ডিনার: ৪টি রুটি · মৌসুমি তরকারি · ডিম",
+              )}
+            />
+            <Bullet
+              t={t(
+                "Thursday dinner is special: pulao / rajma / soya-chilli",
+                "বৃহস্পতিবার ডিনার: স্পেশাল পোলাও / রাজমা / সয়া-চিলি",
+              )}
+            />
+            <Bullet
+              t={t(
+                "All frying done in an air fryer — less oil, healthier",
+                "সব রান্না এয়ার ফ্রায়ারে — তেল কম, স্বাস্থ্যকর",
+              )}
+            />
+            <Bullet
+              t={t(
+                "FSSAI-registered kitchen, fresh vegetables bought daily",
+                "FSSAI-নিবন্ধিত রান্নাঘর, রোজ টাটকা সবজি",
+              )}
+            />
+          </div>
+
+          <Link
+            href="/join"
+            className="block mt-5 py-[13px] bg-bhuk-maroon text-white text-center font-extrabold text-[14px] rounded-[11px] no-underline"
+          >
+            {t("Start a subscription", "সাবস্ক্রিপশন শুরু করুন")}
+          </Link>
+        </div>
+      </section>
+
+      {/* TIMINGS */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="Timings, off days, kitchen" bn="সময়, ছুটি, রান্নাঘরের ব্যাপারে" />
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 mt-[14px]">
+          <InfoCard
+            icon={Coffee}
+            t={t("Brunch", "ব্রাঞ্চ")}
+            v={t("10:30 AM – 12:00 noon", "সকাল ১০:৩০ – দুপুর ১২:০০")}
+            sub={t("Fresh from the kitchen", "রান্নাঘর থেকে সরাসরি")}
+          />
+          <InfoCard
+            icon={Moon}
+            t={t("Dinner", "ডিনার")}
+            v={t("7:30 PM – 9:00 PM", "রাত ৭:৩০ – ৯:০০")}
+            sub={t("Hot rotis and curry", "তাজা গরম রুটি ও তরকারি")}
+          />
+          <InfoCard
+            icon={Sun}
+            t={t("Sunday off", "রবিবার বন্ধ")}
+            v={t("No delivery", "কোনো ডেলিভারি নেই")}
+            sub={t("Weekly off, no charge", "সাপ্তাহিক ছুটি, কোনো চার্জ নেই")}
+          />
+          <InfoCard
+            icon={ChefHat}
+            t={t("Kitchen / cook leave", "রান্নাঘরের ছুটি")}
+            v={t("Announced in advance", "আগে থেকে জানানো হবে")}
+            sub={t(
+              "In-app notice, no charge for that day",
+              "অ্যাপে নোটিশ পাবেন, সেই দিনের টাকা কাটা যাবে না",
+            )}
+          />
+        </div>
+      </section>
+
+      {/* NO-MEAL-DAY */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="The no-meal-day system" bn="না খেলে কী হবে?" />
+        <div className="bg-white border-[1.5px] border-bhuk-line rounded-card p-[18px] mt-[14px] max-w-[680px]">
+          <p className="text-[14px] leading-relaxed text-bhuk-ink mb-3">
+            {t(
+              "Going home? Unwell? Exams? No problem. Open the app, tap the day, confirm. There's just one rule:",
+              "বাড়ি যাচ্ছেন? অসুস্থ? পরীক্ষা? কোনো সমস্যা নেই। অ্যাপে সেই দিনে ট্যাপ করে বাতিল করে দিন। শর্ত একটাই:",
+            )}
+          </p>
+          <div className="bg-bhuk-amber-bg text-bhuk-amber-ink rounded-[12px] px-[14px] py-3 font-extrabold text-[13.5px] flex items-center gap-2">
+            <Clock size={16} />
+            {t(
+              "Cancel before 4 PM the previous day. After 4 PM, the day locks.",
+              "আগের দিন বিকেল ৪টার আগে বাতিল করতে হবে। ৪টার পরে দিনটি লক হয়ে যায়।",
+            )}
+          </div>
+          <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mt-[14px]">
+            {t(
+              "A cancelled day is never charged. Your balance funds a later day at the end of your plan. So you still get all 26 meal days, just shifted forward.",
+              "বাতিল করা দিনে কোনো চার্জ হয় না। আপনার ব্যালান্স দিয়ে মেয়াদের শেষে আরেকটা দিন যোগ হয়। অর্থাৎ ২৬ মিল দিন আপনি পুরোটাই পাবেন, শুধু পিছিয়ে যাবে।",
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* MENU */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="What's on the menu" bn="মেনু কী রকম" />
+        <p className="text-[13.5px] text-bhuk-ink2 leading-relaxed mt-2 max-w-[680px]">
+          {t(
+            "Different every day — a seven-day rotation. Seasonal vegetables, all frying done in an air fryer. Protein changes daily: chicken Mon & Wed, fish Tue & Sat, paneer Thu, egg Fri.",
+            "প্রতিদিন আলাদা — সাত দিনের রোটেশন। মৌসুমি সবজি, সব ভাজা এয়ার ফ্রায়ারে। আমিষ দিন প্রতিদিন বদলায়: সোম ও বুধ চিকেন, মঙ্গল ও শনি মাছ, বৃহঃ পনির, শুক্র ডিম।",
+          )}
+        </p>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[10px] mt-[14px]">
+          <MenuCard
+            day={t("Monday", "সোমবার")}
+            brunch={t(
+              "Chicken curry · fried pointed gourd · masoor dal · rice",
+              "চিকেন ঝোল · পটল ভাজা · মুসুর ডাল · ভাত",
+            )}
+            dinner={t("4 rotis · shukto · boiled egg", "৪টি রুটি · শুক্তো · সিদ্ধ ডিম")}
+          />
+          <MenuCard
+            day={t("Tuesday", "মঙ্গলবার")}
+            brunch={t(
+              "Rohu fish curry · mashed potato · moong dal · rice",
+              "রুই মাছের ঝোল · আলু মাখা · মুগ ডাল · ভাত",
+            )}
+            dinner={t("4 rotis · mixed veg · omelette", "৪টি রুটি · পাঁচমিশালি · অমলেট")}
+          />
+          <MenuCard
+            day={t("Thursday (special)", "বৃহঃ (স্পেশাল)")}
+            brunch={t(
+              "Paneer butter masala · side · chana dal · rice",
+              "পনির বাটার মশলা · সাইড · ডাল · ভাত",
+            )}
+            dinner={t("Pulao + dum aloo", "পোলাও + আলুর দম")}
+          />
+          <MenuCard
+            day={t("Saturday", "শনিবার")}
+            brunch={t(
+              "Katla fish curry · potato-ridge gourd · biuli dal · rice",
+              "কাতলা মাছের কারি · আলু-ঝিঙে · বিউলির ডাল · ভাত",
+            )}
+            dinner={t("4 rotis · lau ghonto · egg bhujia", "৪টি রুটি · লাউ ঘণ্ট · ডিম ভুজিয়া")}
+          />
+        </div>
+      </section>
+
+      {/* DELIVERY */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="Delivery area" bn="ডেলিভারি এলাকা" />
+        <p className="text-[13.5px] text-bhuk-ink2 leading-relaxed mt-2 max-w-[680px]">
+          {t(
+            <>
+              Our kitchen is at <b className="text-bhuk-ink">43, Matangini Hazra Pally, Agarpara, Kolkata 700109</b>. About 5 minutes walk from NIT Agarpara and JIS University.
+            </>,
+            <>
+              আমাদের রান্নাঘর <b className="text-bhuk-ink">৪৩, মাতঙ্গিনী হাজরা পল্লী, আগরপাড়া, কলকাতা ৭০০১০৯</b> এ। NIT Agarpara আর JIS University থেকে হাঁটাপথে ৫ মিনিট।
+            </>,
+          )}
+        </p>
+        <div className="flex flex-wrap gap-2 mt-[14px]">
+          {[
+            "NIT Agarpara",
+            "JIS University",
+            "Matangini Hazra Pally",
+            "Deshpriya Nagar",
+            "Jagarata Pally",
+            "Nilgunj Road",
+            "BSS Road",
+            "Sodepur",
+            "Khardah",
+            "Panihati",
+            "Belghoria",
+            "Kamarhati",
+          ].map((p) => (
+            <span
+              key={p}
+              className="bg-white border border-bhuk-line px-[11px] py-[6px] rounded-pill text-[12px] font-semibold text-bhuk-ink2"
+            >
+              {p}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="Frequently asked questions" bn="সাধারণ প্রশ্ন" />
+        <FAQList />
+      </section>
+
+      {/* FOOTER */}
+      <footer className="px-[18px] pt-6 pb-10 border-t border-bhuk-off bg-[#FAF4E6] mt-5">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[18px] max-w-[1040px]">
+          <div>
+            <div className="font-serif font-bold text-[18px] text-bhuk-maroon">Bhuk Foods</div>
+            <div className="text-[12px] text-bhuk-ink2 leading-relaxed mt-[6px]">
+              {t(
+                <>43, Matangini Hazra Pally<br />Agarpara, Kolkata 700109</>,
+                <>৪৩, মাতঙ্গিনী হাজরা পল্লী<br />আগরপাড়া, কলকাতা ৭০০১০৯</>,
+              )}
+            </div>
+          </div>
+          <div>
+            <div className="text-[11px] font-extrabold text-bhuk-off-ink tracking-wide">
+              {t("CONTACT", "যোগাযোগ")}
+            </div>
+            <div className="text-[13px] text-bhuk-ink mt-[6px] leading-relaxed">
+              <a href="tel:+917595923777" className="text-bhuk-ink no-underline">
+                📞 {t("75959 23777", "৭৫৯৫৯ ২৩৭৭৭")}
+              </a>
+              <br />
+              <a href="mailto:hello@bhukfoods.com" className="text-bhuk-ink no-underline">
+                ✉ hello@bhukfoods.com
+              </a>
+            </div>
+          </div>
+          <div>
+            <div className="text-[11px] font-extrabold text-bhuk-off-ink tracking-wide">
+              {t("LOGIN", "লগইন")}
+            </div>
+            <div className="text-[13px] mt-[6px]">
+              <Link href="/login" className="text-bhuk-terra font-bold no-underline">
+                {t("Customer / Admin / Kitchen →", "গ্রাহক / অ্যাডমিন / রান্নাঘর →")}
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="text-[11px] text-bhuk-off-ink mt-6 leading-relaxed max-w-[1040px]">
+          Tiffin service Agarpara · Tiffin near Narula Institute of Technology · Tiffin for JIS University students · Bengali home-cooked tiffin Sodepur · Student mess Belghoria · Monthly tiffin plan Kolkata north suburbs
+        </div>
+      </footer>
+    </>
+  );
+}
+
+function PriceRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between text-[13px] text-bhuk-ink">
+      <span>{label}</span>
+      <span className="font-extrabold">{value}</span>
+    </div>
+  );
+}
+
+function MenuCard({ day, brunch, dinner }: { day: string; brunch: string; dinner: string }) {
+  const t = useT();
+  return (
+    <div className="bg-white border border-bhuk-line rounded-[14px] p-[14px]">
+      <div className="font-serif font-bold text-bhuk-maroon text-[14.5px]">{day}</div>
+      <div className="mt-2 text-[12.5px] text-bhuk-ink2 leading-relaxed">
+        <div>
+          <b className="text-bhuk-terra">{t("Brunch", "ব্রাঞ্চ")} ·</b> {brunch}
+        </div>
+        <div className="mt-[4px]">
+          <b className="text-bhuk-green-ink">{t("Dinner", "ডিনার")} ·</b> {dinner}
+        </div>
+      </div>
+    </div>
+  );
+}

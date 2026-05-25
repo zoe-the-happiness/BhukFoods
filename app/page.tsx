@@ -1,20 +1,46 @@
+import Link from "next/link";
+import {
+  ChefHat,
+  Clock,
+  Coffee,
+  Mail,
+  MapPin,
+  Moon,
+  Phone,
+  Sun,
+} from "lucide-react";
+
+import { LandingNav } from "@/components/landing/nav";
+import { FAQList } from "@/components/landing/faq";
+import { LandingJsonLd } from "@/components/landing/jsonld";
+import {
+  Bullet,
+  InfoCard,
+  SectionTitle,
+  Stat,
+  StepCard,
+} from "@/components/landing/sections";
+import { LandingT } from "./landing-t";
+
+export const dynamic = "force-static";
+export const revalidate = 3600;
+
 /**
- * Step 1 placeholder. The full landing page (sections, SEO blocks, EN/BN
- * toggle, JSON-LD) lands with Step 11, mirroring design/bhuk_foods_app.jsx
- * pixel-for-pixel.
+ * Bhuk Foods landing page. Ported pixel-for-pixel from
+ * design/bhuk_foods_app.jsx (LandingPage), with one spec change:
+ * the pricing card uses the new ₹2,600 + delivery + ₹250 SD breakdown.
+ *
+ * Everything below the nav is rendered in client components because the
+ * EN/বাং toggle from the LangProvider applies to most copy.
  */
-export default function Page() {
+export default function Landing() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-bhuk-cream px-6">
-      <div className="max-w-md text-center space-y-4">
-        <h1 className="font-serif text-5xl text-bhuk-maroon">Bhuk Foods</h1>
-        <p className="text-bhuk-ink2">
-          Home-style monthly meal plan, cooked fresh in Agarpara.
-        </p>
-        <p className="text-sm text-bhuk-off-ink">
-          Site is being prepared. The full landing page lands with Step 11.
-        </p>
-      </div>
-    </main>
+    <>
+      <LandingJsonLd />
+      <LandingNav />
+      <main className="max-w-[1080px] mx-auto">
+        <LandingT />
+      </main>
+    </>
   );
 }
