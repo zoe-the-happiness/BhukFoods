@@ -12,9 +12,9 @@ const QUESTIONS: Q[] = [
     en_q: "What is the monthly cost of Bhuk Foods tiffin?",
     bn_q: "Bhuk Foods-এর মাসিক খরচ কত?",
     en_a:
-      "Bhuk Foods costs ₹2,600 per month for two meals a day — brunch and dinner — Monday to Saturday, prepaid. Sunday is always off. The plan runs on a money-balance basis: ₹100 equals one meal day, so ₹2,600 buys 26 meal days. Delivery is free for BLPGA residents and self-pickup, and quoted at signup for home delivery.",
+      "Two prepaid meals a day, Monday to Saturday. Sunday is always off. Delivery is free for BLPGA residents and self-pickup; home delivery is quoted at signup. See the Pricing section above for the full monthly fee, delivery tiers, and refundable security deposit.",
     bn_a:
-      "মাসিক ₹২৬০০। সোম থেকে শনি, ব্রাঞ্চ + ডিনার, প্রিপেইড। রবিবার বন্ধ। ১ দিন = ₹১০০, তাই ₹২৬০০ দিলে ২৬টি মিল দিন পাবেন। BLPGA ও নিজে এসে নিলে ডেলিভারি ফ্রি; বাড়িতে ডেলিভারির ক্ষেত্রে শুরুতে কোট দেওয়া হবে।",
+      "প্রিপেইড দু'বেলা মিল, সোম থেকে শনি। রবিবার সবসময় বন্ধ। BLPGA ও নিজে এসে নিলে ডেলিভারি ফ্রি; বাড়িতে ডেলিভারির ক্ষেত্রে শুরুতে কোট। মাসিক ফি, ডেলিভারি স্তর এবং ফেরতযোগ্য জামানতের জন্য উপরের Pricing অংশ দেখুন।",
   },
   {
     en_q: "Is there a tiffin service near Narula Institute of Technology Agarpara?",
@@ -52,17 +52,17 @@ const QUESTIONS: Q[] = [
     en_q: "What are the meal timings?",
     bn_q: "মিলের সময় কখন?",
     en_a:
-      "Brunch is delivered between 8:30 AM and 10:00 AM. Dinner is delivered between 6:00 PM and 8:00 PM. Service runs Monday to Saturday. Sunday is always off.",
+      "Brunch is delivered between 8:00 AM and 10:00 AM. Dinner is delivered between 6:00 PM and 9:00 PM. Service runs Monday to Saturday. Sunday is always off.",
     bn_a:
-      "ব্রাঞ্চ: সকাল ৮:৩০ থেকে ১০:০০। ডিনার: সন্ধ্যা ৬:০০ থেকে রাত ৮:০০। সোম থেকে শনি। রবিবার সবসময় বন্ধ।",
+      "ব্রাঞ্চ: সকাল ৮:০০ থেকে ১০:০০। ডিনার: সন্ধ্যা ৬:০০ থেকে রাত ৯:০০। সোম থেকে শনি। রবিবার সবসময় বন্ধ।",
   },
   {
     en_q: "How does a parent pay for their child's tiffin?",
     bn_q: "অভিভাবক কীভাবে টাকা পাঠাবেন?",
     en_a:
-      "The parent sends ₹2,600 by UPI or bank transfer to the registered number 7595923777. The admin verifies the payment and adds 26 meal days to the student's account. Parents can pay for a full semester in one transfer.",
+      "Send the monthly amount by UPI or bank transfer to the registered number 7595923777. The admin verifies the payment and credits the student's account with a month's meal days. Parents may pay for a full semester in one transfer. The current monthly figure is in the Pricing section above.",
     bn_a:
-      "৭৫৯৫৯ ২৩৭৭৭ নম্বরে UPI বা ব্যাঙ্ক ট্রান্সফারে ₹২৬০০ পাঠান। অ্যাডমিন যাচাই করে ২৬ মিল দিন যোগ করেন। চাইলে একসাথে সেমেস্টারের টাকাও পাঠাতে পারেন।",
+      "৭৫৯৫৯ ২৩৭৭৭ নম্বরে UPI বা ব্যাঙ্ক ট্রান্সফারে মাসিক টাকা পাঠান। অ্যাডমিন যাচাই করে ছাত্রের অ্যাকাউন্টে এক মাসের মিল দিন যোগ করেন। চাইলে এক সাথে সেমেস্টারের টাকাও পাঠাতে পারেন। বর্তমান মাসিক ফি উপরের Pricing অংশে দেখুন।",
   },
   {
     en_q: "Is Bhuk Foods FSSAI registered?",

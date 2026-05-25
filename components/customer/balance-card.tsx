@@ -77,10 +77,8 @@ export function BalanceCard({
   );
 }
 
-export function LowBalanceCallout({ mealBalance }: { mealBalance: number }) {
+export function LowBalanceCallout() {
   const t = useT();
-  const { lang } = useLang();
-  const rupee = (n: number) => `₹${lang === "bn" ? toBengaliNumerals(n) : n}`;
   return (
     <div className="mt-[9px] bg-white border-[1.5px] border-bhuk-amber rounded-[13px] px-3 py-[10px] flex gap-[9px]">
       <AlertTriangle size={17} className="text-bhuk-amber shrink-0 mt-[1px]" />
@@ -90,9 +88,15 @@ export function LowBalanceCallout({ mealBalance }: { mealBalance: number }) {
         </div>
         <div className="text-[11.5px] text-bhuk-ink2 mt-[1px] leading-snug">
           {t(
-            <>Less than 10 days left. Pay {rupee(2600)} to add 26 more days. </>,
-            <>১০ দিনের কম বাকি। ₹২৬০০ দিলে আরও ২৬ দিন যোগ হবে। </>,
+            <>Less than 10 days left. </>,
+            <>১০ দিনের কম বাকি। </>,
           )}
+          <a
+            href="https://www.bhukfoods.com/#pricing"
+            className="text-bhuk-terra font-bold underline underline-offset-2 mr-2"
+          >
+            {t("See pricing", "মূল্য দেখুন")}
+          </a>
           <a
             href="tel:+917595923777"
             className="text-bhuk-terra font-bold no-underline"

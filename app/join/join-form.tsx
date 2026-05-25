@@ -78,7 +78,9 @@ export function JoinForm() {
           Bhuk Foods
         </div>
         <div className="text-[12.5px] text-bhuk-terra font-semibold mt-1">
-          {t("Subscribe — ₹2,600 / month", "সাবস্ক্রাইব — ₹২৬০০ / মাস")}
+          <Link href="/#pricing" className="text-bhuk-terra no-underline">
+            {t("Subscribe — see pricing →", "সাবস্ক্রাইব — মূল্য দেখুন →")}
+          </Link>
         </div>
       </div>
 

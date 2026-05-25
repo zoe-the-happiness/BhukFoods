@@ -16,6 +16,12 @@ export function LandingNav() {
         </div>
         <div className="flex items-center gap-3">
           <Link
+            href="/#pricing"
+            className="hidden sm:inline-flex text-[12.5px] font-extrabold text-bhuk-ink2 hover:text-bhuk-maroon no-underline"
+          >
+            {t("Pricing", "মূল্য")}
+          </Link>
+          <Link
             href="/blog"
             className="hidden sm:inline-flex text-[12.5px] font-extrabold text-bhuk-ink2 hover:text-bhuk-maroon no-underline"
           >

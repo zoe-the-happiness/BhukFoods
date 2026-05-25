@@ -91,11 +91,23 @@ export function CustomerAccountCard({
           <div className="text-[12px] text-bhuk-ink2 mt-[2px] leading-relaxed">
             {t(
               <>
-                Send {rupee(2600)} by UPI/bank to <b>75959 23777</b>. We verify and credit
-                26 days.
+                Pay by UPI/bank to <b>75959 23777</b>. Admin verifies and credits
+                meal days to your account.{" "}
+                <a
+                  href="https://www.bhukfoods.com/#pricing"
+                  className="text-bhuk-terra font-bold underline underline-offset-2"
+                >
+                  See pricing →
+                </a>
               </>,
               <>
-                UPI/ব্যাঙ্কে ₹২৬০০ পাঠান <b>৭৫৯৫৯ ২৩৭৭৭</b> এ, আমরা যাচাই করে ২৬ দিন যোগ করব।
+                UPI/ব্যাঙ্কে <b>৭৫৯৫৯ ২৩৭৭৭</b> এ পাঠান। অ্যাডমিন যাচাই করে মিল দিন যোগ করবেন।{" "}
+                <a
+                  href="https://www.bhukfoods.com/#pricing"
+                  className="text-bhuk-terra font-bold underline underline-offset-2"
+                >
+                  মূল্য দেখুন →
+                </a>
               </>,
             )}
           </div>

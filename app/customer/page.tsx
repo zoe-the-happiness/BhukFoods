@@ -61,7 +61,7 @@ export default async function CustomerHome() {
   return (
     <div className="px-[14px]">
       <BalanceCard fundedDays={fundedDays} mealBalance={meal} lastDay={lastDay} />
-      {fundedDays < 10 ? <LowBalanceCallout mealBalance={meal} /> : null}
+      {fundedDays < 10 ? <LowBalanceCallout /> : null}
       <CustomerCalendar
         today={today}
         servedDates={servedDates}

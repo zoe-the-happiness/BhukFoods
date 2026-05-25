@@ -87,7 +87,10 @@ export default function BlogIndex() {
             Ready to stop cooking?
           </div>
           <p className="text-[13.5px] text-bhuk-ink2 mt-1">
-            ₹2,600 a month for 26 days × 2 meals · BLPGA delivery free · Mon–Sat.
+            Two meals a day, Mon–Sat, all-inclusive.{" "}
+            <Link href="/#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+              See full pricing →
+            </Link>
           </p>
           <div className="flex flex-wrap gap-3 mt-4">
             <Link

@@ -86,9 +86,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               Want this in your life?
             </div>
             <p className="text-[13.5px] text-bhuk-ink2 mt-1 leading-relaxed">
-              ₹2,600 a month buys 26 days × 2 meals. BLPGA residents pay nothing for
-              delivery. Self-pickup and home delivery available across Agarpara and
-              the north suburbs.
+              Two meals a day, Mon–Sat. Self-pickup, home delivery, or on-site at
+              BLPGA.{" "}
+              <Link href="/#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                See pricing →
+              </Link>
             </p>
             <div className="flex flex-wrap gap-3 mt-3">
               <Link

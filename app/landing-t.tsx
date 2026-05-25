@@ -56,8 +56,21 @@ export function LandingT() {
             </h1>
             <p className="text-[15px] leading-relaxed text-bhuk-ink2 mb-[6px]">
               {t(
-                "Two fresh-cooked meals delivered to PGs and hostels in Agarpara. Brunch and dinner, Monday to Saturday. Just ₹2,600 per month — only ₹100 a day.",
-                "আগরপাড়ার ছাত্রাবাস ও PG-তে দু'বেলা টাটকা রান্না করা খাবার। ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। মাসিক ₹২৬০০ — দিন প্রতি মাত্র ₹১০০।",
+                <>
+                  Two fresh-cooked meals delivered to PGs and hostels in
+                  Agarpara. Brunch and dinner, Monday to Saturday. A simple
+                  monthly subscription —{" "}
+                  <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                    see pricing →
+                  </a>
+                </>,
+                <>
+                  আগরপাড়ার ছাত্রাবাস ও PG-তে দু&apos;বেলা টাটকা রান্না করা খাবার।
+                  ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। সাধারণ মাসিক সাবস্ক্রিপশন —{" "}
+                  <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                    মূল্য দেখুন →
+                  </a>
+                </>,
               )}
             </p>
             <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
@@ -101,10 +114,10 @@ export function LandingT() {
           />
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] mt-8 max-w-[680px]">
-          <Stat n={t("₹2,600", "₹২৬০০")} l={t("per month", "প্রতি মাস")} />
           <Stat n={t("2 meals", "২ বেলা")} l={t("brunch + dinner", "ব্রাঞ্চ + ডিনার")} />
           <Stat n={t("26 days", "২৬ দিন")} l={t("Mon to Sat", "সোম-শনি")} />
           <Stat n="4 PM" l={t("cancel cutoff", "বাতিলের সময়সীমা")} />
+          <Stat n="FSSAI" l={t("registered kitchen", "নিবন্ধিত রান্নাঘর")} />
         </div>
       </section>
 
@@ -114,10 +127,10 @@ export function LandingT() {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[14px] mt-[14px]">
           <StepCard
             n={t("1", "১")}
-            t={t("Pay ₹2,600 a month", "মাসিক ₹২৬০০ দিন")}
+            t={t("Pay your monthly fee", "মাসিক ফি দিন")}
             d={t(
-              "Send via UPI or bank transfer. The admin verifies and credits 26 meal days to your account.",
-              "UPI বা ব্যাঙ্ক ট্রান্সফারে। অ্যাডমিন যাচাই করে ২৬ মিল দিন যোগ করেন।",
+              "Send by UPI or bank transfer. The admin verifies and credits a month's meal days to your account. See pricing below.",
+              "UPI বা ব্যাঙ্ক ট্রান্সফারে পাঠান। অ্যাডমিন যাচাই করে এক মাসের মিল দিন যোগ করেন। নিচে মূল্য দেখুন।",
             )}
           />
           <StepCard
@@ -139,9 +152,9 @@ export function LandingT() {
         </div>
       </section>
 
-      {/* PLAN — UPDATED PRICING per spec */}
-      <section className="px-[18px] py-7 border-t border-bhuk-off">
-        <SectionTitle en="Monthly plan" bn="মাসিক প্ল্যান" />
+      {/* PRICING — single source of truth. Everywhere else links to #pricing. */}
+      <section id="pricing" className="px-[18px] py-7 border-t border-bhuk-off scroll-mt-24">
+        <SectionTitle en="Pricing" bn="মূল্য" />
         <div className="bg-white border-[1.5px] border-bhuk-line rounded-card p-5 mt-[14px] max-w-[560px]">
           <div className="flex items-baseline gap-[6px] text-bhuk-maroon">
             <span className="font-serif font-bold text-[38px] leading-none">
