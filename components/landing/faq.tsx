@@ -52,9 +52,9 @@ const QUESTIONS: Q[] = [
     en_q: "What are the meal timings?",
     bn_q: "মিলের সময় কখন?",
     en_a:
-      "Brunch is delivered between 10:30 AM and 12:00 noon. Dinner is delivered between 7:30 PM and 9:00 PM. Service runs Monday to Saturday. Sunday is always off.",
+      "Brunch is delivered between 8:30 AM and 10:00 AM. Dinner is delivered between 6:00 PM and 8:00 PM. Service runs Monday to Saturday. Sunday is always off.",
     bn_a:
-      "ব্রাঞ্চ: সকাল ১০:৩০ থেকে দুপুর ১২:০০। ডিনার: রাত ৭:৩০ থেকে ৯:০০। সোম থেকে শনি। রবিবার সবসময় বন্ধ।",
+      "ব্রাঞ্চ: সকাল ৮:৩০ থেকে ১০:০০। ডিনার: সন্ধ্যা ৬:০০ থেকে রাত ৮:০০। সোম থেকে শনি। রবিবার সবসময় বন্ধ।",
   },
   {
     en_q: "How does a parent pay for their child's tiffin?",

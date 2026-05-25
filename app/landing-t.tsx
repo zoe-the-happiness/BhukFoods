@@ -232,14 +232,14 @@ export function LandingT() {
           <InfoCard
             icon={Coffee}
             t={t("Brunch", "ব্রাঞ্চ")}
-            v={t("10:30 AM – 12:00 noon", "সকাল ১০:৩০ – দুপুর ১২:০০")}
+            v={t("08:30 AM – 10:00 AM", "সকাল ৮:৩০ – ১০:০০")}
             sub={t("Fresh from the kitchen", "রান্নাঘর থেকে সরাসরি")}
           />
           <InfoCard
             icon={Moon}
             t={t("Dinner", "ডিনার")}
-            v={t("7:30 PM – 9:00 PM", "রাত ৭:৩০ – ৯:০০")}
-            sub={t("Hot rotis and curry", "তাজা গরম রুটি ও তরকারি")}
+            v={t("6:00 PM – 8:00 PM", "সন্ধ্যা ৬:০০ – রাত ৮:০০")}
+            sub={t("Hot rice / rotis and curry", "তাজা গরম ভাত / রুটি ও তরকারি")}
           />
           <InfoCard
             icon={Sun}
@@ -287,7 +287,7 @@ export function LandingT() {
 
       {/* MENU */}
       <section className="px-[18px] py-7 border-t border-bhuk-off">
-        <SectionTitle en="What's on the menu" bn="মেনু কী রকম" />
+        <SectionTitle en="Sample · What's on the menu" bn="নমুনা · মেনু কী রকম" />
         <p className="text-[13.5px] text-bhuk-ink2 leading-relaxed mt-2 max-w-[680px]">
           {t(
             "Different every day — a seven-day rotation. Seasonal vegetables, all frying done in an air fryer. Protein changes daily: chicken Mon & Wed, fish Tue & Sat, paneer Thu, egg Fri.",

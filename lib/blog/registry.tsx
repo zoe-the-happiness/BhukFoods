@@ -47,8 +47,8 @@ export const POSTS: Post[] = [
         <H2>What that means concretely</H2>
         <UL>
           <LI>
-            Two meals a day, Monday through Saturday. Brunch between 10:30 and noon. Dinner
-            between 7:30 and 9.
+            Two meals a day, Monday through Saturday. Brunch between 8:30 and 10. Dinner
+            between 6 and 8.
           </LI>
           <LI>
             A 7-day rotation so it doesn't feel like the same plate. Chicken on Mon and
@@ -303,7 +303,7 @@ export const POSTS: Post[] = [
           <LI>
             <B>Brunch (~₹50):</B> 200–250g of cooked rice, a generous cup of dal, the
             protein of the day (chicken / fish / paneer / egg) with curry, plus a
-            seasonal vegetable side. Always served between 10:30 and noon.
+            seasonal vegetable side. Always served between 8:30 and 10 AM.
           </LI>
           <LI>
             <B>Dinner (~₹50):</B> Four hot rotis, a seasonal vegetable curry, and an egg
