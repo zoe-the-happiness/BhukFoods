@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 import { LangProvider, type Lang } from "@/lib/i18n/lang-provider";
 import { ServiceWorkerRegister } from "@/components/push/service-worker-register";
+import { PwaInstallPrompt } from "@/components/pwa/install-prompt";
 
 import "./globals.css";
 
@@ -74,7 +75,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="bg-bhuk-cream text-bhuk-ink antialiased">
         <ServiceWorkerRegister />
-        <LangProvider initial={initialLang}>{children}</LangProvider>
+        <LangProvider initial={initialLang}>
+          {children}
+          <PwaInstallPrompt />
+        </LangProvider>
         {clarityId ? (
           <script
             dangerouslySetInnerHTML={{
