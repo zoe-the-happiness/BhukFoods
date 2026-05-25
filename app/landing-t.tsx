@@ -33,11 +33,11 @@ export function LandingT() {
 
   return (
     <>
-      {/* HERO — full-width banner with a sliding photo marquee behind the copy.
-          The strip in .bhuk-hero-marquee renders 14 photos (the 7 source images
-          twice in a row) and translates -50% over 80s linear, so the loop is
-          seamless and the movement reads instantly as "carousel". */}
-      <section className="relative overflow-hidden min-h-[520px] flex flex-col justify-center">
+      {/* HERO — Netflix-style: full-bleed marquee of photos at full opacity
+          with the copy living in a frosted cream panel anchored bottom-left.
+          The marquee strip (.bhuk-hero-marquee) renders 14 photos and slides
+          -50% over 80s linear, so it loops seamlessly. */}
+      <section className="relative overflow-hidden h-[68vh] min-h-[520px] max-h-[760px]">
         <div className="absolute inset-0 -z-10" aria-hidden="true">
           <div className="bhuk-hero-marquee">
             {[...HERO_CAROUSEL, ...HERO_CAROUSEL].map((src, i) => (
@@ -50,79 +50,85 @@ export function LandingT() {
               />
             ))}
           </div>
-          {/* Two-layer cream wash so the headline and body copy stay legible
-              regardless of which slice of the marquee is on screen. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-bhuk-cream/70 via-bhuk-cream/25 to-bhuk-cream/80" />
-          <div className="absolute inset-0 bg-bhuk-cream/10" />
+          {/* A soft darken-from-bottom vignette so the cream panel doesn't
+              clash with whichever photo is sliding past underneath. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 pointer-events-none" />
         </div>
 
-        <div className="relative px-[18px] pt-12 pb-12 max-w-[760px]">
-          <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[14px]">
-            <MapPin size={11} />
-            {t(
-              "NIT Agarpara · JIS University · 5 min walk",
-              "NIT Agarpara · JIS University · ৫ মিনিট",
-            )}
-          </div>
-          <h1 className="font-serif font-bold text-[38px] sm:text-[44px] leading-[1.05] text-bhuk-maroon -tracking-[0.5px] mb-[14px]">
-            {t(
-              <>
-                Home-style Bengali<br />tiffin for students
-              </>,
-              <>
-                ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
-              </>,
-            )}
-          </h1>
-          <p className="text-[15px] leading-relaxed text-bhuk-ink mb-[6px]">
-            {t(
-              <>
-                Two fresh-cooked meals delivered to PGs and hostels in
-                Agarpara. Brunch and dinner, Monday to Saturday. A simple
-                monthly subscription —{" "}
-                <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
-                  see pricing →
-                </a>
-              </>,
-              <>
-                আগরপাড়ার ছাত্রাবাস ও PG-তে দু&apos;বেলা টাটকা রান্না করা খাবার।
-                ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। সাধারণ মাসিক সাবস্ক্রিপশন —{" "}
-                <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
-                  মূল্য দেখুন →
-                </a>
-              </>,
-            )}
-          </p>
-          <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
-            {t(
-              "Home-style Bengali tiffin for NIT Agarpara and JIS University students. FSSAI-registered kitchen at 43, Matangini Hazra Pally.",
-              "NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য ঘরোয়া বাঙালি রান্না। FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে।",
-            )}
-          </p>
-          <div className="flex flex-wrap gap-[10px]">
-            <Link
-              href="/join"
-              className="bg-bhuk-maroon text-white px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px] shadow-card"
-            >
-              {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
-            </Link>
-            <a
-              href="tel:+917595923777"
-              className="bg-white/95 backdrop-blur border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-            >
-              <Phone size={15} />
-              {t("Call 75959 23777", "কল ৭৫৯৫৯ ২৩৭৭৭")}
-            </a>
-            <a
-              href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
-              className="bg-white/95 backdrop-blur border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-            >
-              <Mail size={15} />
-              {t("WhatsApp", "WhatsApp")}
-            </a>
+        {/* Bottom-left content panel — translucent cream with backdrop blur. */}
+        <div className="absolute bottom-4 sm:bottom-6 left-3 right-3 sm:left-6 sm:right-auto sm:max-w-[560px]">
+          <div className="bg-bhuk-cream/92 supports-[backdrop-filter]:bg-bhuk-cream/78 backdrop-blur-md border border-bhuk-line/70 rounded-card p-5 sm:p-7 shadow-card">
+            <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[12px]">
+              <MapPin size={11} />
+              {t(
+                "NIT Agarpara · JIS University · 5 min walk",
+                "NIT Agarpara · JIS University · ৫ মিনিট",
+              )}
+            </div>
+            <h1 className="font-serif font-bold text-[30px] sm:text-[38px] leading-[1.05] text-bhuk-maroon -tracking-[0.5px] mb-[12px]">
+              {t(
+                <>
+                  Home-style Bengali<br />tiffin for students
+                </>,
+                <>
+                  ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
+                </>,
+              )}
+            </h1>
+            <p className="text-[14px] sm:text-[15px] leading-relaxed text-bhuk-ink mb-[6px]">
+              {t(
+                <>
+                  Two fresh-cooked meals delivered to PGs and hostels in
+                  Agarpara. Brunch and dinner, Monday to Saturday. A simple
+                  monthly subscription —{" "}
+                  <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                    see pricing →
+                  </a>
+                </>,
+                <>
+                  আগরপাড়ার ছাত্রাবাস ও PG-তে দু&apos;বেলা টাটকা রান্না করা খাবার।
+                  ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। সাধারণ মাসিক সাবস্ক্রিপশন —{" "}
+                  <a href="#pricing" className="text-bhuk-terra font-bold underline underline-offset-2">
+                    মূল্য দেখুন →
+                  </a>
+                </>,
+              )}
+            </p>
+            <p className="text-[12.5px] leading-relaxed text-bhuk-ink2 mb-[18px]">
+              {t(
+                "FSSAI-registered kitchen at 43, Matangini Hazra Pally — for NIT Agarpara and JIS University students.",
+                "FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে — NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য।",
+              )}
+            </p>
+            <div className="flex flex-wrap gap-[8px]">
+              <Link
+                href="/join"
+                className="bg-bhuk-maroon text-white px-4 py-[11px] rounded-[10px] text-[13.5px] font-extrabold no-underline inline-flex items-center gap-[6px] shadow-card"
+              >
+                {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
+              </Link>
+              <a
+                href="tel:+917595923777"
+                className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-4 py-[11px] rounded-[10px] text-[13.5px] font-extrabold no-underline inline-flex items-center gap-[6px]"
+              >
+                <Phone size={14} />
+                {t("Call", "কল")}
+              </a>
+              <a
+                href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
+                className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-4 py-[11px] rounded-[10px] text-[13.5px] font-extrabold no-underline inline-flex items-center gap-[6px]"
+              >
+                <Mail size={14} />
+                {t("WhatsApp", "WhatsApp")}
+              </a>
+            </div>
           </div>
         </div>
-        <div className="relative px-[18px] grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] pb-10 max-w-[760px]">
+      </section>
+
+      {/* STATS strip — moved out of the hero so the banner reads cleanly. */}
+      <section className="px-[18px] py-6 border-t border-bhuk-off bg-bhuk-cream">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] max-w-[760px]">
           <Stat n={t("2 meals", "২ বেলা")} l={t("brunch + dinner", "ব্রাঞ্চ + ডিনার")} />
           <Stat n={t("26 days", "২৬ দিন")} l={t("Mon to Sat", "সোম-শনি")} />
           <Stat n="4 PM" l={t("cancel cutoff", "বাতিলের সময়সীমা")} />
