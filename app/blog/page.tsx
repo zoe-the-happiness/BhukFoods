@@ -21,9 +21,44 @@ export const metadata = {
   },
 };
 
+const SITE = "https://www.bhukfoods.com";
+
 export default function BlogIndex() {
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${SITE}/blog#blog`,
+        name: "Bhuk Foods Blog",
+        description:
+          "Field notes from Bhuk Foods — India's first kitchen substitution service in Agarpara, Kolkata.",
+        url: `${SITE}/blog`,
+        inLanguage: "en-IN",
+        blogPost: POSTS.map((p) => ({
+          "@type": "BlogPosting",
+          headline: p.title,
+          description: p.excerpt,
+          datePublished: p.publishedAt,
+          url: `${SITE}/blog/${p.slug}`,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Bhuk Foods", item: SITE },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE}/blog` },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+      />
       <LandingNav />
       <main className="max-w-[920px] mx-auto px-[18px] py-10">
         <header className="mb-8">

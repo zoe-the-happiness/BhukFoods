@@ -36,6 +36,10 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
+const SITE = "https://www.bhukfoods.com";
+const LOGO_URL =
+  "https://ik.imagekit.io/bhukfoods/Logo/Logo%2020260523%201951_Trans.webp";
+
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = postBySlug(params.slug);
   if (!post) notFound();
@@ -43,8 +47,52 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
   const others = POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
 
+  const heroImage = PHOTOS.blogHero[post.slug];
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${siteUrlForPost(post.slug)}#article`,
+        mainEntityOfPage: { "@type": "WebPage", "@id": siteUrlForPost(post.slug) },
+        headline: post.title,
+        description: post.excerpt,
+        url: siteUrlForPost(post.slug),
+        datePublished: post.publishedAt,
+        dateModified: post.publishedAt,
+        wordCount: post.readMinutes * 220,
+        articleSection: "Field notes from Bhuk Foods",
+        author: { "@type": "Person", name: "Nirmalya Ranjan Sarkar" },
+        publisher: {
+          "@type": "Organization",
+          name: "Bhuk Foods",
+          logo: { "@type": "ImageObject", url: LOGO_URL },
+        },
+        image: heroImage ? [heroImage] : [LOGO_URL],
+        inLanguage: "en-IN",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Bhuk Foods", item: SITE },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE}/blog` },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: post.title,
+            item: siteUrlForPost(post.slug),
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
       <LandingNav />
       <article className="max-w-[720px] mx-auto px-[18px] py-10">
         <Link
