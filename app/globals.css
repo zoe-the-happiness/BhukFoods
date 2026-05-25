@@ -51,48 +51,44 @@ button, input, select, textarea {
   .bhuk-marquee-track { animation: none; }
 }
 
-/* Hero background crossfade.
+/* Hero background marquee.
  *
- * 7 images on a 49s cycle. Each image:
- *   - is on screen for ~7s
- *   - fades in for 1.5s and out for 1.5s (so adjacent images crossfade
- *     for ~1.5s with both visible)
- *   - gets a slow Ken-Burns scale 1.00 → 1.08 across its visible window,
- *     so even within one image the eye keeps moving
- * Peak opacity 0.55 — visible without overwhelming the headline. The
- * cream gradient overlay in JSX (from-40 via-30 to-70) keeps body copy
- * legible no matter which photo is up.
+ * 7 photos rendered twice in a row (14 total) inside a flex strip. The
+ * strip translates from 0 to -50% over 80s linear infinite — that maps
+ * back to identical pixel position, so the loop is seamless.
  *
- * Image i (1-indexed) is offset by (i-1) × 7s via the :nth-child rules
- * so they take turns. */
-@keyframes bhuk-hero-fade {
-  0%      { opacity: 0; transform: scale(1.00); }
-  3%      { opacity: 0.55; }                /* 1.5s fade-in done */
-  14.3%   { opacity: 0.55; transform: scale(1.08); }  /* full 7s window */
-  17.3%   { opacity: 0; }                   /* 1.5s fade-out done */
-  100%    { opacity: 0; transform: scale(1.00); }
+ * Why a marquee and not a crossfade: at any moment the eye sees 2–3
+ * photos sliding right-to-left, so "movement" reads instantly. The
+ * cream gradient overlay in JSX keeps headline + CTAs legible.
+ *
+ * Peak strip opacity is 0.45 — clearly visible but not loud. */
+@keyframes bhuk-hero-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
-.bhuk-hero-bg-img {
+.bhuk-hero-marquee {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transform: scale(1.00);
-  transform-origin: center;
-  animation: bhuk-hero-fade 49s ease-in-out infinite;
-  will-change: opacity, transform;
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  opacity: 0.45;
+  animation: bhuk-hero-marquee 80s linear infinite;
+  will-change: transform;
   pointer-events: none;
 }
-.bhuk-hero-bg-img:nth-child(1) { animation-delay:  0s; }
-.bhuk-hero-bg-img:nth-child(2) { animation-delay:  7s; }
-.bhuk-hero-bg-img:nth-child(3) { animation-delay: 14s; }
-.bhuk-hero-bg-img:nth-child(4) { animation-delay: 21s; }
-.bhuk-hero-bg-img:nth-child(5) { animation-delay: 28s; }
-.bhuk-hero-bg-img:nth-child(6) { animation-delay: 35s; }
-.bhuk-hero-bg-img:nth-child(7) { animation-delay: 42s; }
+.bhuk-hero-marquee > img {
+  height: 100%;
+  width: 70vw;
+  max-width: 640px;
+  min-width: 320px;
+  flex-shrink: 0;
+  object-fit: cover;
+  /* Soft join between adjacent photos so transitions feel graceful. */
+  filter: saturate(1.05);
+}
 @media (prefers-reduced-motion: reduce) {
-  .bhuk-hero-bg-img { animation: none; opacity: 0.25; transform: none; }
-  .bhuk-hero-bg-img:not(:first-child) { display: none; }
+  .bhuk-hero-marquee { animation: none; opacity: 0.22; }
+  .bhuk-hero-marquee > img:not(:first-child) { display: none; }
+  .bhuk-hero-marquee > img:first-child { width: 100%; max-width: none; }
 }
