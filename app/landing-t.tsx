@@ -192,8 +192,8 @@ export function LandingT() {
             />
             <Bullet
               t={t(
-                "Dinner: 4 rotis · seasonal vegetable curry · egg",
-                "ডিনার: ৪টি রুটি · মৌসুমি তরকারি · ডিম",
+                "Dinner: rice / 4 rotis · seasonal vegetable curry · egg",
+                "ডিনার: ভাত / ৪টি রুটি · মৌসুমি তরকারি · ডিম",
               )}
             />
             <Bullet

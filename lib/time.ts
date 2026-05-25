@@ -21,13 +21,27 @@ export function istDateStr(d: Date): string {
   return formatInTimeZone(d, TZ, "yyyy-MM-dd");
 }
 
+const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * Parse anything we routinely get from Supabase into a Date in IST:
+ *  - "yyyy-MM-dd"          → midnight IST that day
+ *  - full ISO timestamptz  → parsed as-is (no string surgery)
+ *  - Date                  → passed through
+ */
+function parseToDate(d: Date | string): Date {
+  if (d instanceof Date) return d;
+  return DATE_ONLY.test(d) ? new Date(d + "T00:00:00+05:30") : new Date(d);
+}
+
 export function formatIstDateEn(d: Date | string): string {
-  const dt = typeof d === "string" ? new Date(d + "T00:00:00+05:30") : d;
+  const dt = parseToDate(d);
+  if (Number.isNaN(dt.getTime())) return "—";
   return formatInTimeZone(dt, TZ, "EEE, d LLL yyyy");
 }
 
 export function isSundayIst(date: string): boolean {
-  const dt = new Date(date + "T00:00:00+05:30");
+  const dt = parseToDate(date);
   return toZonedTime(dt, TZ).getDay() === 0;
 }
 
@@ -55,7 +69,8 @@ export function toBengaliNumerals(s: string | number): string {
 }
 
 export function formatIstDateBn(d: Date | string): string {
-  const dt = typeof d === "string" ? new Date(d + "T00:00:00+05:30") : d;
+  const dt = parseToDate(d);
+  if (Number.isNaN(dt.getTime())) return "—";
   const z = toZonedTime(dt, TZ);
   const day = toBengaliNumerals(z.getDate());
   const month = BN_MONTHS[z.getMonth()];
