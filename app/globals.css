@@ -53,16 +53,24 @@ button, input, select, textarea {
 
 /* Hero background crossfade.
  *
- * 7 images share a 35s cycle. Each is on screen for ~5s with a 1s fade-in
- * and 1s fade-out; image i is offset by i × 5s via animation-delay (set
- * with nth-child below) so they take turns. Peak opacity is capped well
- * below 1 so the headline + CTAs stay readable on the cream backdrop. */
+ * 7 images on a 49s cycle. Each image:
+ *   - is on screen for ~7s
+ *   - fades in for 1.5s and out for 1.5s (so adjacent images crossfade
+ *     for ~1.5s with both visible)
+ *   - gets a slow Ken-Burns scale 1.00 → 1.08 across its visible window,
+ *     so even within one image the eye keeps moving
+ * Peak opacity 0.55 — visible without overwhelming the headline. The
+ * cream gradient overlay in JSX (from-40 via-30 to-70) keeps body copy
+ * legible no matter which photo is up.
+ *
+ * Image i (1-indexed) is offset by (i-1) × 7s via the :nth-child rules
+ * so they take turns. */
 @keyframes bhuk-hero-fade {
-  0%      { opacity: 0; }
-  2.86%   { opacity: 0.32; }  /* fade-in done at 1s of 35s */
-  11.43%  { opacity: 0.32; }  /* hold from 1s to 4s */
-  14.28%  { opacity: 0; }     /* fade-out done at 5s */
-  100%    { opacity: 0; }
+  0%      { opacity: 0; transform: scale(1.00); }
+  3%      { opacity: 0.55; }                /* 1.5s fade-in done */
+  14.3%   { opacity: 0.55; transform: scale(1.08); }  /* full 7s window */
+  17.3%   { opacity: 0; }                   /* 1.5s fade-out done */
+  100%    { opacity: 0; transform: scale(1.00); }
 }
 .bhuk-hero-bg-img {
   position: absolute;
@@ -71,18 +79,20 @@ button, input, select, textarea {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  animation: bhuk-hero-fade 35s ease-in-out infinite;
-  will-change: opacity;
+  transform: scale(1.00);
+  transform-origin: center;
+  animation: bhuk-hero-fade 49s ease-in-out infinite;
+  will-change: opacity, transform;
   pointer-events: none;
 }
-.bhuk-hero-bg-img:nth-child(1) { animation-delay: 0s; }
-.bhuk-hero-bg-img:nth-child(2) { animation-delay: 5s; }
-.bhuk-hero-bg-img:nth-child(3) { animation-delay: 10s; }
-.bhuk-hero-bg-img:nth-child(4) { animation-delay: 15s; }
-.bhuk-hero-bg-img:nth-child(5) { animation-delay: 20s; }
-.bhuk-hero-bg-img:nth-child(6) { animation-delay: 25s; }
-.bhuk-hero-bg-img:nth-child(7) { animation-delay: 30s; }
+.bhuk-hero-bg-img:nth-child(1) { animation-delay:  0s; }
+.bhuk-hero-bg-img:nth-child(2) { animation-delay:  7s; }
+.bhuk-hero-bg-img:nth-child(3) { animation-delay: 14s; }
+.bhuk-hero-bg-img:nth-child(4) { animation-delay: 21s; }
+.bhuk-hero-bg-img:nth-child(5) { animation-delay: 28s; }
+.bhuk-hero-bg-img:nth-child(6) { animation-delay: 35s; }
+.bhuk-hero-bg-img:nth-child(7) { animation-delay: 42s; }
 @media (prefers-reduced-motion: reduce) {
-  .bhuk-hero-bg-img { animation: none; opacity: 0.18; }
+  .bhuk-hero-bg-img { animation: none; opacity: 0.25; transform: none; }
   .bhuk-hero-bg-img:not(:first-child) { display: none; }
 }

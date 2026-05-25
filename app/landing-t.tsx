@@ -35,8 +35,9 @@ export function LandingT() {
     <>
       {/* HERO — full-width banner with a crossfading photo carousel behind the copy */}
       <section className="relative overflow-hidden">
-        {/* Background carousel: 7 images, ~5s each on a 35s loop with crossfade.
-            Capped peak opacity in globals.css so the headline stays readable. */}
+        {/* Background carousel: 7 images on a 49s loop. Each image gets a
+            7-second window with a 1.5s crossfade in/out and a slow Ken-Burns
+            zoom (scale 1.00 → 1.08). Animation rules live in globals.css. */}
         <div className="absolute inset-0 -z-10" aria-hidden="true">
           {HERO_CAROUSEL.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
@@ -48,8 +49,11 @@ export function LandingT() {
               className="bhuk-hero-bg-img"
             />
           ))}
-          {/* A soft cream wash so text contrast stays high regardless of which photo is up. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-bhuk-cream/40 via-bhuk-cream/30 to-bhuk-cream/70" />
+          {/* Two-layer wash: a vertical cream gradient (stronger at top + bottom
+              so headline and CTAs always read clean), plus a constant 25%
+              cream tint to lift contrast at the centre. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-bhuk-cream/65 via-bhuk-cream/15 to-bhuk-cream/80" />
+          <div className="absolute inset-0 bg-bhuk-cream/15" />
         </div>
 
         <div className="relative px-[18px] pt-12 pb-12 max-w-[760px]">
