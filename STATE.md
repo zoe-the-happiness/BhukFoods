@@ -101,7 +101,7 @@ Seed:
 admin/cook/printer emails, Clarity ID (`wwio3dkey0`), site URL.
 VAPID keypair will be generated in Step 10.
 
-## Step 2 — Auth + magic-link via Resend  ✅ code live + local smoke green, ⏳ Supabase Auth SMTP/redirect URLs need dashboard config
+## Step 2 — Auth + magic-link via Resend  ✅ live on https://www.bhukfoods.com, end-to-end magic-link flow verified by the owner
 
 Files landed:
 
@@ -171,7 +171,35 @@ Local checks:
 project needs them set in the dashboard / Management API for the magic-link
 callback to be accepted in production.
 
-## Step 3 — Customer console  ⏳ pending
+### Live deploy (interim Step 13)
+
+**Production URL:** https://bhuk-foods-bhuk-foods-team-s-projects.vercel.app
+(custom domain `bhukfoods.com` is being connected — DNS in flight)
+
+Done as part of the early-deploy:
+
+- Repo pushed to https://github.com/zoe-the-happiness/BhukFoods (now **public**).
+- 11 production env vars set on Vercel via `scripts/vercel-setup.mjs`.
+- Project framework patched from `null` to `nextjs` (the first build failed
+  with `STATIC_BUILD_NO_OUT_DIR` because Vercel auto-detection misfired).
+- `ssoProtection` cleared so the .vercel.app URL is publicly reachable
+  while the custom domain DNS lands.
+- Smoke tests pass: `/` and `/login` → 200; `/customer` → 307 to
+  `/login?next=…`.
+
+Pending on the deploy:
+
+- **Supabase Auth redirect allowlist** needs the Vercel URLs added if you
+  want to test magic-link on the .vercel.app URL before bhukfoods.com goes
+  live. Supabase → Auth → URL Configuration → Redirect URLs, add:
+  - `https://bhuk-foods-bhuk-foods-team-s-projects.vercel.app/auth/callback`
+  - `https://bhuk-foods-*-bhuk-foods-team-s-projects.vercel.app/auth/callback`
+    (wildcard for preview builds)
+- Once `bhukfoods.com` resolves, the existing allowlist entry
+  `https://www.bhukfoods.com/auth/callback` already covers it.
+- Resend domain verification (DKIM + SPF) for `bhukfoods.com` — needed so
+  the SMTP from-address `hello@bhukfoods.com` isn't rejected.
+
 ## Step 3 — Customer console  ⏳ pending
 ## Step 4 — Subscriber form + pending flow  ⏳ pending
 ## Step 5 — Admin pending → quote → activate  ⏳ pending
