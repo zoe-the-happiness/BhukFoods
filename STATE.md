@@ -1,8 +1,22 @@
 # Bhuk Foods — Build State
 
-Updated after every numbered step in the 14-step build order. The build is
-gated: Claude pauses at the end of each step so the owner can confirm before
-moving on.
+All 13 steps complete and live at **https://www.bhukfoods.com**.
+Auto-deploys from main on the public GitHub repo
+https://github.com/zoe-the-happiness/BhukFoods.
+
+## Final deploy health check (2026-05-25)
+
+- Landing `/` 200 · `/login` 200 · `/join` 200
+- `/customer` `/admin` `/cook` → 307 → `/login?next=…` for unauthenticated visitors
+- `/manifest.webmanifest`, `/sw.js`, `/icon-192.png`, `/icon-512.png` all 200
+- `/auth/callback` (no code) → 307 → `/login?error=missing_code`
+- `POST /api/cron/daily-charge` with valid Bearer → 200 `{ok:true,charged:0,…}`
+- `POST /api/cron/sixteen-hundred` with valid Bearer → 200 `{ok:true,push:[…]}`
+- `POST /api/cron/low-balance` with valid Bearer → 200 `{ok:true,notified:0,…}`
+- Same routes without Bearer → 401 (expected)
+- pg_cron jobs registered: 4 active rows in `cron.job` (bhuk_*)
+- Resend domain verified, SMTP wired into Supabase Auth, magic-link
+  click end-to-end confirmed working on bhukfoods.com
 
 ## Step 1 — Schema + RLS + my_role() + seed  ✅ applied to live Supabase, smoke-tested, advisor-clean
 
