@@ -4,6 +4,7 @@ import { ArrowLeft, Clock } from "lucide-react";
 
 import { LandingNav } from "@/components/landing/nav";
 import { POSTS, postBySlug, siteUrlForPost } from "@/lib/blog/registry";
+import { ik, IK, PHOTOS } from "@/lib/photos";
 import { formatIstDateEn } from "@/lib/time";
 
 export const dynamic = "force-static";
@@ -64,6 +65,15 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           <h1 className="font-serif font-bold text-[32px] text-bhuk-maroon mt-3 -tracking-[0.4px] leading-tight">
             {post.title}
           </h1>
+          {PHOTOS.blogHero[post.slug] ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={ik(PHOTOS.blogHero[post.slug], IK.blogHero)}
+              alt={post.title}
+              loading="eager"
+              className="w-full mt-5 rounded-card border border-bhuk-line aspect-[16/9] object-cover"
+            />
+          ) : null}
         </header>
 
         <div className="mt-6">

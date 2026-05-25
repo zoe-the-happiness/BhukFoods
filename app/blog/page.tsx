@@ -3,6 +3,7 @@ import { ArrowRight, Clock } from "lucide-react";
 
 import { LandingNav } from "@/components/landing/nav";
 import { POSTS } from "@/lib/blog/registry";
+import { ik, IK, PHOTOS } from "@/lib/photos";
 import { formatIstDateEn } from "@/lib/time";
 
 export const dynamic = "force-static";
@@ -40,31 +41,45 @@ export default function BlogIndex() {
         </header>
 
         <ol className="list-none flex flex-col gap-4">
-          {POSTS.map((post) => (
-            <li key={post.slug}>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="block bg-white border border-bhuk-line rounded-card p-5 no-underline hover:border-bhuk-maroon transition-colors"
-              >
-                <div className="flex items-center gap-2 text-[11px] text-bhuk-off-ink font-bold">
-                  <span>{formatIstDateEn(post.publishedAt)}</span>
-                  <span>·</span>
-                  <span className="flex items-center gap-1">
-                    <Clock size={11} /> {post.readMinutes} min
-                  </span>
-                </div>
-                <h2 className="font-serif font-bold text-[22px] text-bhuk-maroon mt-2 -tracking-[0.2px] leading-tight">
-                  {post.title}
-                </h2>
-                <p className="text-[14px] text-bhuk-ink2 leading-relaxed mt-2">
-                  {post.excerpt}
-                </p>
-                <div className="mt-3 text-[12.5px] text-bhuk-terra font-bold flex items-center gap-1">
-                  Read more <ArrowRight size={13} />
-                </div>
-              </Link>
-            </li>
-          ))}
+          {POSTS.map((post) => {
+            const hero = PHOTOS.blogHero[post.slug];
+            return (
+              <li key={post.slug}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="block bg-white border border-bhuk-line rounded-card no-underline hover:border-bhuk-maroon transition-colors overflow-hidden grid md:grid-cols-[280px_1fr] gap-0"
+                >
+                  {hero ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={ik(hero, IK.thumb)}
+                      alt=""
+                      loading="lazy"
+                      className="w-full h-full max-h-[220px] md:max-h-none object-cover aspect-[16/10] md:aspect-auto"
+                    />
+                  ) : null}
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 text-[11px] text-bhuk-off-ink font-bold">
+                      <span>{formatIstDateEn(post.publishedAt)}</span>
+                      <span>·</span>
+                      <span className="flex items-center gap-1">
+                        <Clock size={11} /> {post.readMinutes} min
+                      </span>
+                    </div>
+                    <h2 className="font-serif font-bold text-[22px] text-bhuk-maroon mt-2 -tracking-[0.2px] leading-tight">
+                      {post.title}
+                    </h2>
+                    <p className="text-[14px] text-bhuk-ink2 leading-relaxed mt-2">
+                      {post.excerpt}
+                    </p>
+                    <div className="mt-3 text-[12.5px] text-bhuk-terra font-bold flex items-center gap-1">
+                      Read more <ArrowRight size={13} />
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
         </ol>
 
         <div className="mt-10 bg-bhuk-cream border border-bhuk-line rounded-card p-5">

@@ -21,6 +21,7 @@ import {
   StepCard,
 } from "@/components/landing/sections";
 import { useT } from "@/lib/i18n/lang-provider";
+import { ik, IK, PHOTOS } from "@/lib/photos";
 
 const LOGO_TRANS = "https://ik.imagekit.io/bhukfoods/Logo/Logo%2020260523%201951_Trans.webp";
 
@@ -32,58 +33,70 @@ export function LandingT() {
     <>
       {/* HERO */}
       <section className="px-[18px] pt-9 pb-7">
-        <div className="max-w-[680px]">
-          <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[14px]">
-            <MapPin size={11} />
-            {t(
-              "NIT Agarpara · JIS University · 5 min walk",
-              "NIT Agarpara · JIS University · ৫ মিনিট",
-            )}
+        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 items-center">
+          <div className="max-w-[680px]">
+            <div className="inline-flex items-center gap-[6px] bg-bhuk-amber-bg text-bhuk-amber-ink px-[11px] py-[5px] rounded-pill text-[11.5px] font-extrabold mb-[14px]">
+              <MapPin size={11} />
+              {t(
+                "NIT Agarpara · JIS University · 5 min walk",
+                "NIT Agarpara · JIS University · ৫ মিনিট",
+              )}
+            </div>
+            <h1 className="font-serif font-bold text-[34px] leading-[1.1] text-bhuk-maroon -tracking-[0.5px] mb-[14px]">
+              {t(
+                <>
+                  Home-style Bengali<br />tiffin for students
+                </>,
+                <>
+                  ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
+                </>,
+              )}
+            </h1>
+            <p className="text-[15px] leading-relaxed text-bhuk-ink2 mb-[6px]">
+              {t(
+                "Two fresh-cooked meals delivered to PGs and hostels in Agarpara. Brunch and dinner, Monday to Saturday. Just ₹2,600 per month — only ₹100 a day.",
+                "আগরপাড়ার ছাত্রাবাস ও PG-তে দু'বেলা টাটকা রান্না করা খাবার। ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। মাসিক ₹২৬০০ — দিন প্রতি মাত্র ₹১০০।",
+              )}
+            </p>
+            <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
+              {t(
+                "Home-style Bengali tiffin for NIT Agarpara and JIS University students. FSSAI-registered kitchen at 43, Matangini Hazra Pally.",
+                "NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য ঘরোয়া বাঙালি রান্না। FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে।",
+              )}
+            </p>
+            <div className="flex flex-wrap gap-[10px]">
+              <Link
+                href="/join"
+                className="bg-bhuk-maroon text-white px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+              >
+                {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
+              </Link>
+              <a
+                href="tel:+917595923777"
+                className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+              >
+                <Phone size={15} />
+                {t("Call 75959 23777", "কল ৭৫৯৫৯ ২৩৭৭৭")}
+              </a>
+              <a
+                href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
+                className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
+              >
+                <Mail size={15} />
+                {t("WhatsApp", "WhatsApp")}
+              </a>
+            </div>
           </div>
-          <h1 className="font-serif font-bold text-[34px] leading-[1.1] text-bhuk-maroon -tracking-[0.5px] mb-[14px]">
-            {t(
-              <>
-                Home-style Bengali<br />tiffin for students
-              </>,
-              <>
-                ছাত্র-ছাত্রীদের জন্য<br />ঘরোয়া বাঙালি রান্না
-              </>,
-            )}
-          </h1>
-          <p className="text-[15px] leading-relaxed text-bhuk-ink2 mb-[6px]">
-            {t(
-              "Two fresh-cooked meals delivered to PGs and hostels in Agarpara. Brunch and dinner, Monday to Saturday. Just ₹2,600 per month — only ₹100 a day.",
-              "আগরপাড়ার ছাত্রাবাস ও PG-তে দু'বেলা টাটকা রান্না করা খাবার। ব্রাঞ্চ আর ডিনার, সোম থেকে শনি। মাসিক ₹২৬০০ — দিন প্রতি মাত্র ₹১০০।",
-            )}
-          </p>
-          <p className="text-[13.5px] leading-relaxed text-bhuk-ink2 mb-[22px]">
-            {t(
-              "Home-style Bengali tiffin for NIT Agarpara and JIS University students. FSSAI-registered kitchen at 43, Matangini Hazra Pally.",
-              "NIT Agarpara আর JIS University-র ছাত্রছাত্রীদের জন্য ঘরোয়া বাঙালি রান্না। FSSAI-নিবন্ধিত রান্নাঘর ৪৩, মাতঙ্গিনী হাজরা পল্লীতে।",
-            )}
-          </p>
-          <div className="flex flex-wrap gap-[10px]">
-            <Link
-              href="/join"
-              className="bg-bhuk-maroon text-white px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-            >
-              {t("Subscribe now", "এখনই সাবস্ক্রাইব")}
-            </Link>
-            <a
-              href="tel:+917595923777"
-              className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-            >
-              <Phone size={15} />
-              {t("Call 75959 23777", "কল ৭৫৯৫৯ ২৩৭৭৭")}
-            </a>
-            <a
-              href="https://wa.me/917595923777?text=Hi%2C%20I%27m%20interested%20in%20Bhuk%20Foods%20tiffin"
-              className="bg-white border-[1.5px] border-bhuk-line text-bhuk-ink px-5 py-[13px] rounded-[11px] text-[14px] font-extrabold no-underline inline-flex items-center gap-[7px]"
-            >
-              <Mail size={15} />
-              {t("WhatsApp", "WhatsApp")}
-            </a>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={ik(PHOTOS.hero, IK.hero)}
+            alt={t(
+              "A home-style Bengali meal from the Bhuk Foods kitchen in Agarpara",
+              "Bhuk Foods-এর রান্নাঘর থেকে ঘরোয়া বাঙালি খাবার",
+            ) as string}
+            loading="eager"
+            className="w-full rounded-card shadow-card object-cover aspect-[4/3] border border-bhuk-line"
+          />
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-[10px] mt-8 max-w-[680px]">
           <Stat n={t("₹2,600", "₹২৬০০")} l={t("per month", "প্রতি মাস")} />
@@ -282,6 +295,7 @@ export function LandingT() {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[10px] mt-[14px]">
           <MenuCard
             day={t("Monday", "সোমবার")}
+            photo={PHOTOS.menuMon}
             brunch={t(
               "Chicken curry · fried pointed gourd · masoor dal · rice",
               "চিকেন ঝোল · পটল ভাজা · মুসুর ডাল · ভাত",
@@ -290,6 +304,7 @@ export function LandingT() {
           />
           <MenuCard
             day={t("Tuesday", "মঙ্গলবার")}
+            photo={PHOTOS.menuTue}
             brunch={t(
               "Rohu fish curry · mashed potato · moong dal · rice",
               "রুই মাছের ঝোল · আলু মাখা · মুগ ডাল · ভাত",
@@ -298,6 +313,7 @@ export function LandingT() {
           />
           <MenuCard
             day={t("Thursday (special)", "বৃহঃ (স্পেশাল)")}
+            photo={PHOTOS.menuThu}
             brunch={t(
               "Paneer butter masala · side · chana dal · rice",
               "পনির বাটার মশলা · সাইড · ডাল · ভাত",
@@ -306,12 +322,39 @@ export function LandingT() {
           />
           <MenuCard
             day={t("Saturday", "শনিবার")}
+            photo={PHOTOS.menuSat}
             brunch={t(
               "Katla fish curry · potato-ridge gourd · biuli dal · rice",
               "কাতলা মাছের কারি · আলু-ঝিঙে · বিউলির ডাল · ভাত",
             )}
             dinner={t("4 rotis · lau ghonto · egg bhujia", "৪টি রুটি · লাউ ঘণ্ট · ডিম ভুজিয়া")}
           />
+        </div>
+      </section>
+
+      {/* FROM THE KITCHEN — photo gallery */}
+      <section className="px-[18px] py-7 border-t border-bhuk-off">
+        <SectionTitle en="From the kitchen" bn="রান্নাঘর থেকে" />
+        <p className="text-[13.5px] text-bhuk-ink2 leading-relaxed mt-2 max-w-[680px]">
+          {t(
+            "Snapshots from 43, Matangini Hazra Pally — morning groceries, the air fryer in motion, the cook at her station, plates going out the door.",
+            "৪৩, মাতঙ্গিনী হাজরা পল্লীর কিছু ঝলক — সকালের বাজার, এয়ার ফ্রায়ারে ভাজা, রান্নার দাদার হাতের কাজ, প্যাক হয়ে রওনা।",
+          )}
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-[10px] mt-[14px]">
+          {PHOTOS.kitchen.map((src, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={i}
+              src={ik(src, IK.card)}
+              alt={t(
+                `Bhuk Foods kitchen — photo ${i + 1}`,
+                `Bhuk Foods রান্নাঘর — ছবি ${i + 1}`,
+              ) as string}
+              loading="lazy"
+              className="w-full aspect-[4/3] object-cover rounded-card border border-bhuk-line"
+            />
+          ))}
         </div>
       </section>
 
@@ -506,17 +549,38 @@ function PriceRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function MenuCard({ day, brunch, dinner }: { day: string; brunch: string; dinner: string }) {
+function MenuCard({
+  day,
+  brunch,
+  dinner,
+  photo,
+}: {
+  day: string;
+  brunch: string;
+  dinner: string;
+  photo?: string;
+}) {
   const t = useT();
   return (
-    <div className="bg-white border border-bhuk-line rounded-[14px] p-[14px]">
-      <div className="font-serif font-bold text-bhuk-maroon text-[14.5px]">{day}</div>
-      <div className="mt-2 text-[12.5px] text-bhuk-ink2 leading-relaxed">
-        <div>
-          <b className="text-bhuk-terra">{t("Brunch", "ব্রাঞ্চ")} ·</b> {brunch}
-        </div>
-        <div className="mt-[4px]">
-          <b className="text-bhuk-green-ink">{t("Dinner", "ডিনার")} ·</b> {dinner}
+    <div className="bg-white border border-bhuk-line rounded-[14px] overflow-hidden">
+      {photo ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={ik(photo, IK.card)}
+          alt={day}
+          loading="lazy"
+          className="w-full aspect-[16/10] object-cover"
+        />
+      ) : null}
+      <div className="p-[14px]">
+        <div className="font-serif font-bold text-bhuk-maroon text-[14.5px]">{day}</div>
+        <div className="mt-2 text-[12.5px] text-bhuk-ink2 leading-relaxed">
+          <div>
+            <b className="text-bhuk-terra">{t("Brunch", "ব্রাঞ্চ")} ·</b> {brunch}
+          </div>
+          <div className="mt-[4px]">
+            <b className="text-bhuk-green-ink">{t("Dinner", "ডিনার")} ·</b> {dinner}
+          </div>
         </div>
       </div>
     </div>
