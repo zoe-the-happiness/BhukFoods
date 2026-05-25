@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authorizeCron } from "@/lib/cron/auth";
 import { sendMail } from "@/lib/email/resend";
 import { renderTemplate } from "@/lib/email/render";
+import { sendPushToAdmin, sendPushToCooks, sendPushToUsers } from "@/lib/push/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { formatIstDateBn, formatIstDateEn } from "@/lib/time";
 
@@ -113,6 +114,40 @@ export async function POST(request: NextRequest) {
     console.error("[16:00] tomorrow_admin send failed:", err);
   }
 
+  // Web Push fanout.
+  const eatingIds = new Set(
+    (eaters as unknown as Array<{ user_id: string }> | null ?? []).map((e) => e.user_id),
+  );
+  const eatingUserIds = (customers ?? []).map((c) => c.id).filter((id) => eatingIds.has(id) && !offIds.has(id));
+  const offUserIds = (customers ?? []).map((c) => c.id).filter((id) => offIds.has(id));
+
+  const pushResults = await Promise.allSettled([
+    sendPushToUsers(eatingUserIds, {
+      title: "Tomorrow's meal is on",
+      body: `Bhuk Foods · ${dateEn}. Tap to see your calendar.`,
+      url: "/customer",
+      tag: `tomorrow-${tomorrow}`,
+    }),
+    sendPushToUsers(offUserIds, {
+      title: "Tomorrow you are off",
+      body: `${dateEn}: no meal. Plan extends by one day.`,
+      url: "/customer",
+      tag: `tomorrow-${tomorrow}`,
+    }),
+    sendPushToAdmin({
+      title: "Tomorrow's headcount",
+      body: `${eaters?.length ?? 0} eating, ${offsRaw?.length ?? 0} off. Sheet locks at 16:30 IST.`,
+      url: "/admin/stats",
+      tag: `tomorrow-${tomorrow}`,
+    }),
+    sendPushToCooks({
+      title: `Cook ${eaters?.length ?? 0} for tomorrow`,
+      body: dateEn,
+      url: "/cook",
+      tag: `tomorrow-${tomorrow}`,
+    }),
+  ]);
+
   return NextResponse.json({
     ok: true,
     date: tomorrow,
@@ -120,5 +155,6 @@ export async function POST(request: NextRequest) {
     customer_failed: customerFail,
     headcount: eaters?.length ?? 0,
     off_count: offsRaw?.length ?? 0,
+    push: pushResults.map((r) => (r.status === "fulfilled" ? r.value : { error: String(r.reason) })),
   });
 }

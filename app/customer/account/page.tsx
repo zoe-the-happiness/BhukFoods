@@ -1,4 +1,5 @@
 import { CustomerAccountCard } from "@/components/customer/account-card";
+import { PushToggle } from "@/components/push/push-toggle";
 import { requireRole } from "@/lib/auth-guards";
 import { istToday } from "@/lib/time";
 
@@ -44,6 +45,8 @@ export default async function CustomerAccountPage() {
     globalOffs,
   });
 
+  const vapid = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
+
   return (
     <div className="px-[14px]">
       <CustomerAccountCard
@@ -53,6 +56,16 @@ export default async function CustomerAccountPage() {
         daysRemaining={Number(daysRem ?? 0)}
         lastDay={lastDay}
       />
+      <div className="mt-3 bg-white border border-bhuk-line rounded-card p-4">
+        <div className="font-serif font-bold text-[14px] text-bhuk-maroon">
+          Notifications
+        </div>
+        <div className="text-[11.5px] text-bhuk-ink2 mt-1 mb-2 leading-snug">
+          Get a push notification at 4 PM with tomorrow&apos;s status, plus a
+          heads-up if the kitchen closes for the day.
+        </div>
+        {vapid ? <PushToggle vapidPublicKey={vapid} /> : null}
+      </div>
     </div>
   );
 }

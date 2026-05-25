@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authorizeCron } from "@/lib/cron/auth";
 import { sendMail } from "@/lib/email/resend";
 import { renderTemplate } from "@/lib/email/render";
+import { sendPushToAdmin, sendPushToCooks } from "@/lib/push/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { buildCookSheetPdf } from "@/lib/cron/cook-sheet-pdf";
 import { menuForDay } from "@/lib/menu";
@@ -124,6 +125,22 @@ export async function POST(request: NextRequest) {
     console.error("[cook-sheet] email failed:", err);
     return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
   }
+
+  // Web Push to admin + cook ("Cook sheet locked. Tomorrow: X meals.")
+  await Promise.allSettled([
+    sendPushToAdmin({
+      title: "Cook sheet locked",
+      body: `Tomorrow: ${eaters?.length ?? 0} meals · ${formatIstDateEn(tomorrow)}`,
+      url: "/admin/stats",
+      tag: `cook-sheet-${tomorrow}`,
+    }),
+    sendPushToCooks({
+      title: `Cook ${eaters?.length ?? 0} for tomorrow`,
+      body: `Sheet locked · ${formatIstDateEn(tomorrow)}`,
+      url: "/cook",
+      tag: `cook-sheet-${tomorrow}`,
+    }),
+  ]);
 
   return NextResponse.json({
     ok: true,

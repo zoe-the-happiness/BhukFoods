@@ -3,6 +3,7 @@ import { Fraunces, Figtree, Noto_Sans_Bengali } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { LangProvider, type Lang } from "@/lib/i18n/lang-provider";
+import { ServiceWorkerRegister } from "@/components/push/service-worker-register";
 
 import "./globals.css";
 
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fraunces.variable} ${figtree.variable} ${notoBn.variable}`}
     >
       <body className="bg-bhuk-cream text-bhuk-ink antialiased">
+        <ServiceWorkerRegister />
         <LangProvider initial={initialLang}>{children}</LangProvider>
         {clarityId ? (
           <script

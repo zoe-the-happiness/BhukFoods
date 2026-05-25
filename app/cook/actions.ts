@@ -2,13 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 
+import { sendPushToAdmin, sendPushToAllCustomers } from "@/lib/push/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { formatIstDateEn } from "@/lib/time";
 
 type Result = { ok: true } | { ok: false; error: string };
 
 /**
  * Cook panic button — declares the kitchen closed for today.
  * RLS allows cook role to insert cook_leave_global for service_date = ist_today().
+ * Then push every customer + admin so they don't show up expecting a meal.
  */
 export async function cookPanic(): Promise<Result> {
   const supabase = createSupabaseServerClient();
@@ -29,10 +32,28 @@ export async function cookPanic(): Promise<Result> {
   if (error) {
     // Unique partial index will return 23505 if today is already global-off.
     if ((error as { code?: string }).code === "23505") {
-      return { ok: true };
+      // Already closed for today — still re-broadcast in case earlier pushes missed.
+    } else {
+      return { ok: false, error: error.message };
     }
-    return { ok: false, error: error.message };
   }
+
+  const dateEn = formatIstDateEn(today);
+  await Promise.allSettled([
+    sendPushToAllCustomers({
+      title: "Today's meal is cancelled",
+      body: `${dateEn} — the kitchen is closed today. No charge; your plan extends by one day.`,
+      url: "/customer",
+      tag: `global-off-${today}`,
+    }),
+    sendPushToAdmin({
+      title: "Cook declared today off",
+      body: `${dateEn}: all customers notified, no charges will run tonight.`,
+      url: "/admin/closed",
+      tag: `global-off-${today}`,
+    }),
+  ]);
+
   revalidatePath("/cook");
   return { ok: true };
 }
