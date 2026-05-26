@@ -1,3 +1,9 @@
+// Polyfill required by @pdf-lib/fontkit's CJS bundle on Vercel's Node runtime.
+// Fontkit was compiled with regenerator-runtime references but doesn't ship the
+// polyfill itself, so without this the function throws a ReferenceError on
+// first import. Must be the very first import so it runs before fontkit loads.
+import "regenerator-runtime/runtime";
+
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
