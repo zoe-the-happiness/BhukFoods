@@ -67,7 +67,14 @@ export async function POST(request: NextRequest) {
     headcount: eaters?.length ?? 0,
     eating: (eaters as unknown as EaterRow[] | null ?? []),
     off,
-    menu: menu ? { brunch: menu.brunch_en, dinner: menu.dinner_en } : null,
+    menu: menu
+      ? {
+          brunchBn: menu.brunch_bn,
+          dinnerBn: menu.dinner_bn,
+          brunchEn: menu.brunch_en,
+          dinnerEn: menu.dinner_en,
+        }
+      : null,
   });
 
   const buffer = Buffer.from(pdfBytes);
