@@ -13,6 +13,7 @@
     "db:push": "npx supabase db push",
     "db:diff": "npx supabase db diff",
     "seed:users": "tsx scripts/seed-users.ts",
+    "seed:test-accounts": "tsx scripts/seed-test-accounts.ts",
     "vapid:gen": "node scripts/gen-vapid.mjs"
   },
   "dependencies": {

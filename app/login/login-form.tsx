@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowLeft, KeyRound, Mail } from "lucide-react";
 
 import { LangToggle } from "@/components/lang-toggle";
 import { useT } from "@/lib/i18n/lang-provider";
 
-import { sendMagicLink } from "./actions";
+import { sendMagicLink, signInWithPassword } from "./actions";
+
+type Mode = "magic" | "password";
 
 /**
  * Mirrors LoginScreen in design/bhuk_foods_app.jsx, minus the demo role
@@ -21,7 +24,10 @@ export function LoginForm({
   initialError?: string | null;
 }) {
   const t = useT();
+  const router = useRouter();
+  const [mode, setMode] = useState<Mode>("magic");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(initialError);
   const [isPending, startTransition] = useTransition();
@@ -32,6 +38,16 @@ export function LoginForm({
     const trimmed = email.trim();
     if (!trimmed) return;
     startTransition(async () => {
+      if (mode === "password") {
+        const res = await signInWithPassword({ email: trimmed, password, next });
+        if (res.ok) {
+          router.replace(res.redirect);
+          router.refresh();
+        } else {
+          setError(res.error ?? t("Sign-in failed.", "লগইন ব্যর্থ হয়েছে।"));
+        }
+        return;
+      }
       const res = await sendMagicLink({ email: trimmed, next });
       if (res?.ok) {
         setSent(true);
@@ -72,10 +88,15 @@ export function LoginForm({
               {t("Sign in", "লগইন করুন")}
             </div>
             <div className="text-[12.5px] text-bhuk-ink2 mb-[14px] leading-relaxed">
-              {t(
-                "Enter your email. We'll send you a login link. No password needed.",
-                "ইমেইল দিন, আমরা লগইন লিংক পাঠাব। কোনো পাসওয়ার্ড লাগবে না।",
-              )}
+              {mode === "magic"
+                ? t(
+                    "Enter your email. We'll send you a login link. No password needed.",
+                    "ইমেইল দিন, আমরা লগইন লিংক পাঠাব। কোনো পাসওয়ার্ড লাগবে না।",
+                  )
+                : t(
+                    "Enter your email and password.",
+                    "আপনার ইমেইল এবং পাসওয়ার্ড দিন।",
+                  )}
             </div>
             <input
               type="email"
@@ -86,18 +107,46 @@ export function LoginForm({
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-[13px] py-[12px] border-[1.5px] border-bhuk-line rounded-[11px] text-[14px] outline-none mb-[10px] focus:border-bhuk-maroon transition-colors"
             />
+            {mode === "password" ? (
+              <input
+                type="password"
+                required
+                placeholder={t("Password", "পাসওয়ার্ড") as string}
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-[13px] py-[12px] border-[1.5px] border-bhuk-line rounded-[11px] text-[14px] outline-none mb-[10px] focus:border-bhuk-maroon transition-colors"
+              />
+            ) : null}
             {error ? (
               <div className="text-[12px] text-bhuk-maroon mb-[10px]">{error}</div>
             ) : null}
             <button
               type="submit"
-              disabled={isPending || !email.trim()}
+              disabled={isPending || !email.trim() || (mode === "password" && !password)}
               className="w-full py-[12px] border-0 bg-bhuk-maroon text-white font-extrabold text-[14px] rounded-[11px] cursor-pointer flex items-center justify-center gap-[6px] disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <Mail size={15} />
+              {mode === "password" ? <KeyRound size={15} /> : <Mail size={15} />}
               {isPending
-                ? t("Sending…", "পাঠানো হচ্ছে…")
+                ? mode === "password"
+                  ? t("Signing in…", "লগইন হচ্ছে…")
+                  : t("Sending…", "পাঠানো হচ্ছে…")
+                : mode === "password"
+                ? t("Sign in", "লগইন করুন")
                 : t("Send me a login link", "লগইন লিংক পাঠান")}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMode(mode === "magic" ? "password" : "magic");
+                setError(null);
+                setPassword("");
+              }}
+              className="w-full mt-[10px] bg-transparent border-0 text-bhuk-terra text-[12px] font-bold cursor-pointer"
+            >
+              {mode === "magic"
+                ? t("Use password instead", "পাসওয়ার্ড দিয়ে লগইন করুন")
+                : t("Use a magic-link email instead", "ইমেইল লিংক দিয়ে লগইন করুন")}
             </button>
           </form>
         ) : (
