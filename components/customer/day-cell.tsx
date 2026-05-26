@@ -52,6 +52,13 @@ export function DayCell({ date, state, canCancel, onClick }: Props) {
   } else if (state === "cancelled") {
     base += " bg-white text-bhuk-terra border-[1.4px] border-dashed border-bhuk-terra";
     badge = <X size={9} className="absolute top-[3px] right-[3px] text-bhuk-terra" />;
+    // Customer-cancelled days stay clickable until the 4 PM cutoff so the
+    // customer can undo their cancellation. After cutoff, the day is locked
+    // and the cell behaves as a non-interactive marker.
+    if (canCancel) {
+      base += " cursor-pointer";
+      clickable = true;
+    }
   } else if (state === "adminoff") {
     base += " bg-white text-bhuk-off-ink border-[1.4px] border-dashed border-bhuk-off-ink";
     badge = <X size={9} className="absolute top-[3px] right-[3px] text-bhuk-off-ink" />;

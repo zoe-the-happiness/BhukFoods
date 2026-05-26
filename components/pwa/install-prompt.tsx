@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Download, X } from "lucide-react";
 
@@ -13,6 +14,17 @@ type BeforeInstallPromptEvent = Event & {
 const DISMISSED_KEY = "bhuk-install-dismissed-at";
 const DISMISS_TTL_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
 
+// Routes where the install banner would be premature or distracting:
+// signed-out flows, the subscribe form, the auth callback, the marketing
+// landing, and the blog. The banner only adds value once the user is in
+// their own console and likely to come back.
+const SUPPRESS_PREFIXES = ["/login", "/auth", "/join", "/blog"];
+function isSuppressed(pathname: string | null): boolean {
+  if (!pathname) return false;
+  if (pathname === "/") return true;
+  return SUPPRESS_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+}
+
 /**
  * Shows a discrete "Install Bhuk Foods" banner when the browser fires
  * beforeinstallprompt. Dismissed banners stay hidden for ~30 days.
@@ -20,6 +32,7 @@ const DISMISS_TTL_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
  */
 export function PwaInstallPrompt() {
   const t = useT();
+  const pathname = usePathname();
   const [evt, setEvt] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
 
@@ -45,6 +58,7 @@ export function PwaInstallPrompt() {
   }, []);
 
   if (installed || !evt) return null;
+  if (isSuppressed(pathname)) return null;
 
   return (
     <div className="fixed bottom-[80px] left-1/2 -translate-x-1/2 w-[calc(100%-28px)] max-w-[460px] bg-bhuk-maroon text-white rounded-card p-3 z-30 flex items-center gap-3 shadow-toast">

@@ -10,6 +10,8 @@ import { CustomerActions } from "./customer-actions";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Customer" };
+
 const TYPE_LABEL: Record<string, string> = {
   credit: "Credit",
   meal_charge: "Meal",

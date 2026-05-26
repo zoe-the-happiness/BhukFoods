@@ -9,6 +9,8 @@ import { PendingActions } from "./pending-actions";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Pending subscriber" };
+
 const DELIVERY_LABEL: Record<string, string> = {
   blpga_onsite: "Living at BLPGA",
   self_pickup: "Self-pickup at kitchen",

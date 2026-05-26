@@ -6,6 +6,8 @@ import { formatInTimeZone } from "date-fns-tz";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Calendar" };
+
 export default async function CustomerHome() {
   const { profile, supabase } = await requireRole("customer", "/customer");
 
